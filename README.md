@@ -17,10 +17,10 @@ ImageGuard is an AI-powered platform developed to improve trust and transparency
 
 🛠️ Tech Stack
 
--Frontend: React.js
--Backend: Node.js, Express.js
--AI Service: FastAPI (Python)
--Database: MongoDB
--Computer Vision: OpenCV
--Deep Learning: PyTorch
--Authentication: JWT
+- Frontend: React.js
+- Backend: Node.js, Express.js
+- AI Service: FastAPI (Python)
+- Database: MongoDB
+- Computer Vision: OpenCV
+- Deep Learning: PyTorch
+- Authentication: JWT
