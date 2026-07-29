@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import protect from "./middleware/authMiddleware.js";
+import productRoutes from "./routes/productRoutes.js";
 
 
 dotenv.config();
@@ -15,7 +16,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use("/uploads", express.static("uploads"));
+
 app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
 
 app.get("/", (req, res) => {
     res.send("ImageGuard API Running...");
