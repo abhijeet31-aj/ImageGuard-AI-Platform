@@ -1,19 +1,16 @@
-
 import express from "express";
 import protect from "../middleware/authMiddleware.js";
 import upload from "../middleware/uploadMiddleware.js";
-import { createProduct } from "../controllers/productController.js";
-
-
+import { uploadImage } from "../controllers/imageController.js";
 
 const router = express.Router();
 
+// Upload Image
 router.post(
-    "/create",
+    "/upload",
     protect,
     upload.single("image"),
-    createProduct
+    uploadImage
 );
-
 
 export default router;
