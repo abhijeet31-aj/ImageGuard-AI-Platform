@@ -3,6 +3,7 @@ import ImageAnalysis from "../models/ImageAnalysis.js";
 import { generateImageHash } from "../services/hashService.js";
 import { checkDuplicateImage } from "../services/duplicateService.js";
 import { extractMetadata } from "../services/metadataService.js";
+import { analyzeResolution, analyzeBrightness, } from "../services/qualityService.js";
 
 export const uploadImage = async (req, res) => {
     try {
@@ -17,6 +18,10 @@ export const uploadImage = async (req, res) => {
         const imagePath = path.join("uploads", req.file.filename);
 
         const metadata = await extractMetadata(imagePath);
+
+        const resolution = analyzeResolution(metadata);
+
+        const brightness = await analyzeBrightness(imagePath);
 
         const imageHash = await generateImageHash(imagePath);
 
@@ -44,7 +49,12 @@ export const uploadImage = async (req, res) => {
                         : null,
                 },
                 aiDetection: {},
-                qualityAssessment: {},
+                qualityAssessment: {
+                    resolution,
+                    brightness,
+                    contrast: {},
+                    blur: {},
+                },
                 recommendation: ""
             }
         });
