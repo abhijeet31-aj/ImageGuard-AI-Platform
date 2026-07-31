@@ -1,5 +1,7 @@
 import path from "path";
 import ImageAnalysis from "../models/ImageAnalysis.js";
+import { generateImageHash } from "../services/hashService.js";
+import { checkDuplicateImage } from "../services/duplicateService.js";
 import { extractMetadata } from "../services/metadataService.js";
 
 export const uploadImage = async (req, res) => {
@@ -16,13 +18,31 @@ export const uploadImage = async (req, res) => {
 
         const metadata = await extractMetadata(imagePath);
 
+        const imageHash = await generateImageHash(imagePath);
+
+        const previousAnalysis = await checkDuplicateImage(
+            req.user._id,
+            imageHash
+        );
+
         const imageAnalysis = await ImageAnalysis.create({
             uploadedBy: req.user._id,
             image: req.file.filename,
+            imageHash: imageHash,
             status: "pending",
             report: {
                 metadata: metadata,
-                duplicateCheck: {},
+                duplicateCheck: {
+                    isDuplicate: previousAnalysis ? true : false,
+
+                    previousAnalysisId: previousAnalysis
+                        ? previousAnalysis._id
+                        : null,
+
+                    previousAnalysisDate: previousAnalysis
+                        ? previousAnalysis.createdAt
+                        : null,
+                },
                 aiDetection: {},
                 qualityAssessment: {},
                 recommendation: ""
