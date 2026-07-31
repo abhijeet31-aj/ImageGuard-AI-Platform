@@ -5,7 +5,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import protect from "./middleware/authMiddleware.js";
 import imageRoutes from "./routes/imageRoutes.js";
-
+import pythonRoutes from "./routes/pythonRoutes.js";
 
 dotenv.config();
 
@@ -20,6 +20,8 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/images", imageRoutes);
+
+app.use("/api/python", pythonRoutes);
 
 app.get("/", (req, res) => {
     res.send("ImageGuard API Running...");
