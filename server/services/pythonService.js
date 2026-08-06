@@ -1,4 +1,8 @@
 import axios from "axios";
+import FormData from "form-data";
+import fs from "fs";
+
+
 
 const PYTHON_API = "http://127.0.0.1:8000";
 
@@ -16,4 +20,33 @@ export const checkPythonEngine = async () => {
         throw new Error("Python Engine Not Running");
 
     }
+};
+
+export const sendImageToPython = async (imagePath, category) => {
+
+    const formData = new FormData();
+
+    formData.append(
+        "image",
+        fs.createReadStream(imagePath)
+    );
+
+    formData.append(
+        "category",
+        category
+    )
+    const response = await axios.post(
+
+        `${PYTHON_API}/analyze-image`,
+
+        formData,
+
+        {
+            headers: formData.getHeaders(),
+        }
+
+    );
+
+    return response.data;
+
 };
