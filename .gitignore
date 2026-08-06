@@ -26,6 +26,7 @@ server/uploads/
 python-engine/venv/
 python-engine/__pycache__/
 *.pyc
+python-engine/dataset/
 
 # ==========================
 # IDE
