@@ -1,75 +1,233 @@
 import path from "path";
+
 import ImageAnalysis from "../models/ImageAnalysis.js";
+
 import { generateImageHash } from "../services/hashService.js";
 import { checkDuplicateImage } from "../services/duplicateService.js";
 import { extractMetadata } from "../services/metadataService.js";
-import { analyzeResolution, analyzeBrightness, } from "../services/qualityService.js";
+
+import {
+    analyzeResolution,
+    analyzeBrightness,
+} from "../services/qualityService.js";
+
+import { sendImageToPython } from "../services/pythonService.js";
+
+import {
+    calculateTrustScore
+} from "../services/trustScoreService.js";
 
 export const uploadImage = async (req, res) => {
+
     try {
 
+        // --------------------------------------------------
+        // 1. CHECK IMAGE
+        // --------------------------------------------------
+
         if (!req.file) {
+
             return res.status(400).json({
                 success: false,
                 message: "No image uploaded"
             });
+
         }
 
-        const imagePath = path.join("uploads", req.file.filename);
 
-        const metadata = await extractMetadata(imagePath);
+        // --------------------------------------------------
+        // 2. IMAGE PATH
+        // --------------------------------------------------
 
-        const resolution = analyzeResolution(metadata);
-
-        const brightness = await analyzeBrightness(imagePath);
-
-        const imageHash = await generateImageHash(imagePath);
-
-        const previousAnalysis = await checkDuplicateImage(
-            req.user._id,
-            imageHash
+        const imagePath = path.join(
+            "uploads",
+            req.file.filename
         );
 
-        const imageAnalysis = await ImageAnalysis.create({
-            uploadedBy: req.user._id,
-            image: req.file.filename,
-            imageHash: imageHash,
-            status: "pending",
-            report: {
-                metadata: metadata,
-                duplicateCheck: {
-                    isDuplicate: previousAnalysis ? true : false,
 
-                    previousAnalysisId: previousAnalysis
-                        ? previousAnalysis._id
-                        : null,
+        // --------------------------------------------------
+        // 3. CATEGORY
+        // --------------------------------------------------
 
-                    previousAnalysisDate: previousAnalysis
-                        ? previousAnalysis.createdAt
-                        : null,
-                },
-                aiDetection: {},
-                qualityAssessment: {
-                    resolution,
-                    brightness,
-                    contrast: {},
-                    blur: {},
-                },
-                recommendation: ""
-            }
+        const category =
+            req.body.category || "unknown";
+
+
+        // --------------------------------------------------
+        // 4. METADATA
+        // --------------------------------------------------
+
+        const metadata =
+            await extractMetadata(imagePath);
+
+
+        // --------------------------------------------------
+        // 5. IMAGE QUALITY
+        // --------------------------------------------------
+
+        const resolution =
+            analyzeResolution(metadata);
+
+        const brightness =
+            await analyzeBrightness(imagePath);
+
+
+        // --------------------------------------------------
+        // 6. IMAGE HASH
+        // --------------------------------------------------
+
+        const imageHash =
+            await generateImageHash(imagePath);
+
+
+        // --------------------------------------------------
+        // 7. DUPLICATE CHECK
+        // --------------------------------------------------
+
+        const previousAnalysis =
+            await checkDuplicateImage(
+                req.user._id,
+                imageHash
+            );
+
+
+        // --------------------------------------------------
+        // 8. PYTHON IMAGE ANALYSIS
+        // --------------------------------------------------
+
+        const pythonAnalysis =
+            await sendImageToPython(
+                imagePath,
+                category
+            );
+
+
+
+        const duplicateCheck = {
+            isDuplicate: previousAnalysis
+                ? true
+                : false,
+
+            previousAnalysisId: previousAnalysis
+                ? previousAnalysis._id
+                : null,
+
+            previousAnalysisDate: previousAnalysis
+                ? previousAnalysis.createdAt
+                : null
+        };
+
+
+
+        const trustResult = calculateTrustScore({
+
+            aiDetection:
+                pythonAnalysis.aiDetection,
+
+            metadataAnalysis:
+                pythonAnalysis.metadataAnalysis,
+
         });
 
-        res.status(201).json({
+
+
+        // --------------------------------------------------
+        // 9. CREATE ANALYSIS RECORD
+        // --------------------------------------------------
+
+        const imageAnalysis =
+            await ImageAnalysis.create({
+
+                uploadedBy: req.user._id,
+
+                image: req.file.filename,
+
+                imageHash: imageHash,
+
+                status: "completed",
+
+                trustScore: trustResult.trustScore,
+
+                report: {
+
+                    metadata: metadata,
+
+                    duplicateCheck: duplicateCheck,
+
+                    aiDetection:
+                        pythonAnalysis.aiDetection,
+
+                    metadataAnalysis:
+                        pythonAnalysis.metadataAnalysis,
+
+                    elaMetrics:
+                        pythonAnalysis.elaMetrics,
+
+                    forgeryAnalysis:
+                        pythonAnalysis.forgeryAnalysis,
+
+                    qualityAssessment: {
+
+                        resolution,
+
+                        brightness,
+
+                        contrast: {},
+
+                        blur: {},
+
+                    },
+
+                    trustScore:
+                        trustResult.trustScore,
+
+                    riskLevel:
+                        trustResult.riskLevel,
+
+                    scoreBreakdown:
+                        trustResult.scoreBreakdown,
+
+                    recommendation:
+                        trustResult.recommendation
+
+                }
+
+            });
+
+
+        // --------------------------------------------------
+        // 10. RESPONSE
+        // --------------------------------------------------
+
+        return res.status(201).json({
+
             success: true,
-            message: "Image uploaded successfully",
+
+            message:
+                "Image analyzed successfully",
+
             imageAnalysis
+
         });
+
 
     } catch (error) {
-        console.log(error);
-        res.status(500).json({
+
+        console.log(
+            "Image analysis error:",
+            error
+        );
+
+        return res.status(500).json({
+
             success: false,
-            message: "Server Error"
+
+            message:
+                error.message ||
+                "Server Error"
+
         });
+
     }
+
 };

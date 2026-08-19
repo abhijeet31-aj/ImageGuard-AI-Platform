@@ -1,0 +1,1001 @@
+filename,true_label,prediction,ai_probability,confidence,threshold,correct
+00000.png,REAL,Real,0.0015,0.9985,0.35,True
+00001.png,REAL,Real,0.0599,0.9401,0.35,True
+00002.png,REAL,Real,0.005,0.995,0.35,True
+00003.png,REAL,Real,0.0,1.0,0.35,True
+00004.png,REAL,Real,0.0002,0.9998,0.35,True
+00005.png,REAL,Real,0.0002,0.9998,0.35,True
+00006.png,REAL,Real,0.0,1.0,0.35,True
+00007.png,REAL,Real,0.0,1.0,0.35,True
+00008.png,REAL,Real,0.0,1.0,0.35,True
+00009.png,REAL,Real,0.0,1.0,0.35,True
+00010.png,REAL,Real,0.0,1.0,0.35,True
+00011.png,REAL,Real,0.0001,0.9999,0.35,True
+00012.png,REAL,Real,0.0,1.0,0.35,True
+00013.png,REAL,Real,0.0,1.0,0.35,True
+00014.png,REAL,Real,0.0,1.0,0.35,True
+00015.png,REAL,Real,0.0,1.0,0.35,True
+00016.png,REAL,Real,0.0001,0.9999,0.35,True
+00017.png,REAL,Real,0.0036,0.9964,0.35,True
+00018.png,REAL,Real,0.0,1.0,0.35,True
+00019.png,REAL,Real,0.0,1.0,0.35,True
+00020.png,REAL,Real,0.0,1.0,0.35,True
+00021.png,REAL,Real,0.0,1.0,0.35,True
+00022.png,REAL,Real,0.0001,0.9999,0.35,True
+00023.png,REAL,Real,0.0002,0.9998,0.35,True
+00024.png,REAL,Real,0.0105,0.9895,0.35,True
+00025.png,REAL,Real,0.0573,0.9427,0.35,True
+00026.png,REAL,Real,0.0008,0.9992,0.35,True
+00027.png,REAL,Real,0.0008,0.9992,0.35,True
+00028.png,REAL,Real,0.0001,0.9999,0.35,True
+00029.png,REAL,Real,0.0017,0.9983,0.35,True
+00030.png,REAL,Real,0.0009,0.9991,0.35,True
+00031.png,REAL,Real,0.0006,0.9994,0.35,True
+00032.png,REAL,Real,0.0002,0.9998,0.35,True
+00033.png,REAL,Real,0.0,1.0,0.35,True
+00034.png,REAL,Real,0.0094,0.9906,0.35,True
+00035.png,REAL,Real,0.0,1.0,0.35,True
+00036.png,REAL,Real,0.0,1.0,0.35,True
+00037.png,REAL,Real,0.0,1.0,0.35,True
+00038.png,REAL,Real,0.0002,0.9998,0.35,True
+00039.png,REAL,Real,0.0082,0.9918,0.35,True
+00040.png,REAL,Real,0.0001,0.9999,0.35,True
+00041.png,REAL,Real,0.0008,0.9992,0.35,True
+00042.png,REAL,Real,0.0,1.0,0.35,True
+00043.png,REAL,Real,0.0001,0.9999,0.35,True
+00044.png,REAL,Real,0.0112,0.9888,0.35,True
+00045.png,REAL,Real,0.0001,0.9999,0.35,True
+00046.png,REAL,Real,0.0004,0.9996,0.35,True
+00047.png,REAL,Real,0.0001,0.9999,0.35,True
+00048.png,REAL,Real,0.0,1.0,0.35,True
+00049.png,REAL,Real,0.0,1.0,0.35,True
+00050.png,REAL,Real,0.0005,0.9995,0.35,True
+00051.png,REAL,Real,0.0,1.0,0.35,True
+00052.png,REAL,Real,0.0,1.0,0.35,True
+00053.png,REAL,Real,0.0,1.0,0.35,True
+00054.png,REAL,Real,0.0,1.0,0.35,True
+00055.png,REAL,Real,0.0001,0.9999,0.35,True
+00056.png,REAL,Real,0.0,1.0,0.35,True
+00057.png,REAL,Real,0.0001,0.9999,0.35,True
+00058.png,REAL,Real,0.0,1.0,0.35,True
+00059.png,REAL,Real,0.0001,0.9999,0.35,True
+00060.png,REAL,Real,0.0164,0.9836,0.35,True
+00061.png,REAL,Real,0.0001,0.9999,0.35,True
+00062.png,REAL,Real,0.2312,0.7688,0.35,True
+00063.png,REAL,Real,0.0001,0.9999,0.35,True
+00064.png,REAL,Real,0.0001,0.9999,0.35,True
+00065.png,REAL,Real,0.0025,0.9975,0.35,True
+00066.png,REAL,Real,0.0,1.0,0.35,True
+00067.png,REAL,Real,0.001,0.999,0.35,True
+00068.png,REAL,Real,0.0001,0.9999,0.35,True
+00069.png,REAL,Real,0.0014,0.9986,0.35,True
+00070.png,REAL,Real,0.0001,0.9999,0.35,True
+00071.png,REAL,Real,0.0008,0.9992,0.35,True
+00072.png,REAL,Real,0.0001,0.9999,0.35,True
+00073.png,REAL,Real,0.0,1.0,0.35,True
+00074.png,REAL,Real,0.0,1.0,0.35,True
+00075.png,REAL,Real,0.0,1.0,0.35,True
+00076.png,REAL,Real,0.0,1.0,0.35,True
+00077.png,REAL,Real,0.0643,0.9357,0.35,True
+00078.png,REAL,Real,0.0004,0.9996,0.35,True
+00079.png,REAL,Real,0.0096,0.9904,0.35,True
+00080.png,REAL,Real,0.0001,0.9999,0.35,True
+00081.png,REAL,Real,0.0012,0.9988,0.35,True
+00082.png,REAL,Real,0.0001,0.9999,0.35,True
+00083.png,REAL,Real,0.0095,0.9905,0.35,True
+00084.png,REAL,Real,0.0002,0.9998,0.35,True
+00085.png,REAL,Real,0.0,1.0,0.35,True
+00086.png,REAL,Real,0.0001,0.9999,0.35,True
+00087.png,REAL,Real,0.0006,0.9994,0.35,True
+00088.png,REAL,Real,0.0002,0.9998,0.35,True
+00089.png,REAL,Real,0.0002,0.9998,0.35,True
+00090.png,REAL,Real,0.0,1.0,0.35,True
+00091.png,REAL,Real,0.0002,0.9998,0.35,True
+00092.png,REAL,Real,0.0004,0.9996,0.35,True
+00093.png,REAL,Real,0.0,1.0,0.35,True
+00094.png,REAL,Real,0.0054,0.9946,0.35,True
+00095.png,REAL,Real,0.0,1.0,0.35,True
+00096.png,REAL,Real,0.1032,0.8968,0.35,True
+00097.png,REAL,Real,0.0,1.0,0.35,True
+00098.png,REAL,Real,0.0,1.0,0.35,True
+00099.png,REAL,Real,0.0004,0.9996,0.35,True
+00100.png,REAL,Real,0.0,1.0,0.35,True
+00101.png,REAL,Real,0.0004,0.9996,0.35,True
+00102.png,REAL,Real,0.0,1.0,0.35,True
+00103.png,REAL,Real,0.0004,0.9996,0.35,True
+00104.png,REAL,Real,0.0,1.0,0.35,True
+00105.png,REAL,Real,0.0003,0.9997,0.35,True
+00106.png,REAL,Real,0.0,1.0,0.35,True
+00107.png,REAL,Real,0.0003,0.9997,0.35,True
+00108.png,REAL,Real,0.0003,0.9997,0.35,True
+00109.png,REAL,Real,0.0001,0.9999,0.35,True
+00110.png,REAL,Real,0.0013,0.9987,0.35,True
+00111.png,REAL,Real,0.0,1.0,0.35,True
+00112.png,REAL,Real,0.0111,0.9889,0.35,True
+00113.png,REAL,Real,0.0106,0.9894,0.35,True
+00114.png,REAL,Real,0.0,1.0,0.35,True
+00115.png,REAL,Real,0.0039,0.9961,0.35,True
+00116.png,REAL,Real,0.0001,0.9999,0.35,True
+00117.png,REAL,Real,0.0,1.0,0.35,True
+00118.png,REAL,Real,0.022,0.978,0.35,True
+00119.png,REAL,Real,0.0012,0.9988,0.35,True
+00120.png,REAL,Real,0.0271,0.9729,0.35,True
+00121.png,REAL,Real,0.0,1.0,0.35,True
+00122.png,REAL,Real,0.0001,0.9999,0.35,True
+00123.png,REAL,Real,0.3401,0.6599,0.35,True
+00124.png,REAL,Real,0.0002,0.9998,0.35,True
+00125.png,REAL,Real,0.0048,0.9952,0.35,True
+00126.png,REAL,Real,0.0011,0.9989,0.35,True
+00127.png,REAL,Real,0.0002,0.9998,0.35,True
+00128.png,REAL,Real,0.0,1.0,0.35,True
+00129.png,REAL,Real,0.0022,0.9978,0.35,True
+00130.png,REAL,Real,0.0004,0.9996,0.35,True
+00131.png,REAL,Real,0.0363,0.9637,0.35,True
+00132.png,REAL,Real,0.0001,0.9999,0.35,True
+00133.png,REAL,Real,0.0005,0.9995,0.35,True
+00134.png,REAL,Real,0.0,1.0,0.35,True
+00135.png,REAL,Real,0.0,1.0,0.35,True
+00136.png,REAL,Real,0.0002,0.9998,0.35,True
+00137.png,REAL,Real,0.0,1.0,0.35,True
+00138.png,REAL,Real,0.0,1.0,0.35,True
+00139.png,REAL,Real,0.0001,0.9999,0.35,True
+00140.png,REAL,Real,0.0003,0.9997,0.35,True
+00141.png,REAL,Real,0.0001,0.9999,0.35,True
+00142.png,REAL,Real,0.005,0.995,0.35,True
+00143.png,REAL,Real,0.0,1.0,0.35,True
+00144.png,REAL,Real,0.0,1.0,0.35,True
+00145.png,REAL,Real,0.0017,0.9983,0.35,True
+00146.png,REAL,Real,0.0002,0.9998,0.35,True
+00147.png,REAL,Real,0.0,1.0,0.35,True
+00148.png,REAL,Real,0.0001,0.9999,0.35,True
+00149.png,REAL,Real,0.0,1.0,0.35,True
+00150.png,REAL,Real,0.0,1.0,0.35,True
+00151.png,REAL,Real,0.0312,0.9688,0.35,True
+00152.png,REAL,Real,0.0097,0.9903,0.35,True
+00153.png,REAL,Real,0.0089,0.9911,0.35,True
+00154.png,REAL,Real,0.0001,0.9999,0.35,True
+00155.png,REAL,Real,0.0008,0.9992,0.35,True
+00156.png,REAL,Real,0.0008,0.9992,0.35,True
+00157.png,REAL,Real,0.0001,0.9999,0.35,True
+00158.png,REAL,Real,0.0,1.0,0.35,True
+00159.png,REAL,Real,0.002,0.998,0.35,True
+00160.png,REAL,Real,0.0001,0.9999,0.35,True
+00161.png,REAL,Real,0.0,1.0,0.35,True
+00162.png,REAL,Real,0.0,1.0,0.35,True
+00163.png,REAL,Real,0.0006,0.9994,0.35,True
+00164.png,REAL,Real,0.0002,0.9998,0.35,True
+00165.png,REAL,Real,0.0006,0.9994,0.35,True
+00166.png,REAL,Real,0.0139,0.9861,0.35,True
+00167.png,REAL,Real,0.2769,0.7231,0.35,True
+00168.png,REAL,Real,0.0003,0.9997,0.35,True
+00169.png,REAL,Real,0.0119,0.9881,0.35,True
+00170.png,REAL,Real,0.0001,0.9999,0.35,True
+00171.png,REAL,Real,0.0016,0.9984,0.35,True
+00172.png,REAL,Real,0.0024,0.9976,0.35,True
+00173.png,REAL,Real,0.0001,0.9999,0.35,True
+00174.png,REAL,Real,0.0004,0.9996,0.35,True
+00175.png,REAL,Real,0.0001,0.9999,0.35,True
+00176.png,REAL,Real,0.0062,0.9938,0.35,True
+00177.png,REAL,Real,0.0003,0.9997,0.35,True
+00178.png,REAL,Real,0.0,1.0,0.35,True
+00179.png,REAL,Real,0.0001,0.9999,0.35,True
+00180.png,REAL,Real,0.0003,0.9997,0.35,True
+00181.png,REAL,Real,0.0,1.0,0.35,True
+00182.png,REAL,Real,0.0001,0.9999,0.35,True
+00183.png,REAL,Real,0.0001,0.9999,0.35,True
+00184.png,REAL,Real,0.0001,0.9999,0.35,True
+00185.png,REAL,Real,0.0,1.0,0.35,True
+00186.png,REAL,Real,0.0,1.0,0.35,True
+00187.png,REAL,Real,0.0001,0.9999,0.35,True
+00188.png,REAL,Real,0.0026,0.9974,0.35,True
+00189.png,REAL,Real,0.0,1.0,0.35,True
+00190.png,REAL,Real,0.0004,0.9996,0.35,True
+00191.png,REAL,Real,0.0,1.0,0.35,True
+00192.png,REAL,Real,0.0001,0.9999,0.35,True
+00193.png,REAL,Real,0.0001,0.9999,0.35,True
+00194.png,REAL,Real,0.0004,0.9996,0.35,True
+00195.png,REAL,Real,0.0001,0.9999,0.35,True
+00196.png,REAL,Real,0.0,1.0,0.35,True
+00197.png,REAL,Real,0.0,1.0,0.35,True
+00198.png,REAL,Real,0.0009,0.9991,0.35,True
+00199.png,REAL,Real,0.0,1.0,0.35,True
+00200.png,REAL,Real,0.0021,0.9979,0.35,True
+00201.png,REAL,Real,0.0,1.0,0.35,True
+00202.png,REAL,Real,0.0002,0.9998,0.35,True
+00203.png,REAL,Real,0.0,1.0,0.35,True
+00204.png,REAL,Real,0.0003,0.9997,0.35,True
+00205.png,REAL,Real,0.0001,0.9999,0.35,True
+00206.png,REAL,Real,0.0,1.0,0.35,True
+00207.png,REAL,Real,0.0002,0.9998,0.35,True
+00208.png,REAL,Real,0.0002,0.9998,0.35,True
+00209.png,REAL,Real,0.0232,0.9768,0.35,True
+00210.png,REAL,Real,0.0001,0.9999,0.35,True
+00211.png,REAL,Real,0.0009,0.9991,0.35,True
+00212.png,REAL,Real,0.0001,0.9999,0.35,True
+00213.png,REAL,AI Generated,0.9011,0.9011,0.35,False
+00214.png,REAL,Real,0.0002,0.9998,0.35,True
+00215.png,REAL,Real,0.1674,0.8326,0.35,True
+00216.png,REAL,Real,0.0,1.0,0.35,True
+00217.png,REAL,Real,0.0,1.0,0.35,True
+00218.png,REAL,Real,0.0043,0.9957,0.35,True
+00219.png,REAL,Real,0.0,1.0,0.35,True
+00220.png,REAL,Real,0.0,1.0,0.35,True
+00221.png,REAL,Real,0.0001,0.9999,0.35,True
+00222.png,REAL,Real,0.0001,0.9999,0.35,True
+00223.png,REAL,Real,0.0001,0.9999,0.35,True
+00224.png,REAL,Real,0.0003,0.9997,0.35,True
+00225.png,REAL,Real,0.0002,0.9998,0.35,True
+00226.png,REAL,Real,0.0003,0.9997,0.35,True
+00227.png,REAL,Real,0.0015,0.9985,0.35,True
+00228.png,REAL,Real,0.0,1.0,0.35,True
+00229.png,REAL,Real,0.0,1.0,0.35,True
+00230.png,REAL,Real,0.0002,0.9998,0.35,True
+00231.png,REAL,Real,0.0118,0.9882,0.35,True
+00232.png,REAL,Real,0.0001,0.9999,0.35,True
+00233.png,REAL,Real,0.0004,0.9996,0.35,True
+00234.png,REAL,Real,0.0001,0.9999,0.35,True
+00235.png,REAL,Real,0.0,1.0,0.35,True
+00236.png,REAL,Real,0.0001,0.9999,0.35,True
+00237.png,REAL,Real,0.0031,0.9969,0.35,True
+00238.png,REAL,Real,0.0004,0.9996,0.35,True
+00239.png,REAL,Real,0.0,1.0,0.35,True
+00240.png,REAL,Real,0.0001,0.9999,0.35,True
+00241.png,REAL,Real,0.0,1.0,0.35,True
+00242.png,REAL,Real,0.001,0.999,0.35,True
+00243.png,REAL,Real,0.0004,0.9996,0.35,True
+00244.png,REAL,Real,0.0002,0.9998,0.35,True
+00245.png,REAL,Real,0.0001,0.9999,0.35,True
+00246.png,REAL,Real,0.001,0.999,0.35,True
+00247.png,REAL,Real,0.0003,0.9997,0.35,True
+00248.png,REAL,Real,0.1214,0.8786,0.35,True
+00249.png,REAL,Real,0.0006,0.9994,0.35,True
+00250.png,REAL,Real,0.0003,0.9997,0.35,True
+00251.png,REAL,Real,0.1954,0.8046,0.35,True
+00252.png,REAL,Real,0.0126,0.9874,0.35,True
+00253.png,REAL,Real,0.0002,0.9998,0.35,True
+00254.png,REAL,Real,0.0008,0.9992,0.35,True
+00255.png,REAL,Real,0.0013,0.9987,0.35,True
+00256.png,REAL,Real,0.0,1.0,0.35,True
+00257.png,REAL,Real,0.0,1.0,0.35,True
+00258.png,REAL,Real,0.0,1.0,0.35,True
+00259.png,REAL,Real,0.0,1.0,0.35,True
+00260.png,REAL,Real,0.0779,0.9221,0.35,True
+00261.png,REAL,Real,0.0001,0.9999,0.35,True
+00262.png,REAL,Real,0.0003,0.9997,0.35,True
+00263.png,REAL,Real,0.0,1.0,0.35,True
+00264.png,REAL,Real,0.0002,0.9998,0.35,True
+00265.png,REAL,Real,0.0,1.0,0.35,True
+00266.png,REAL,Real,0.0003,0.9997,0.35,True
+00267.png,REAL,Real,0.0001,0.9999,0.35,True
+00268.png,REAL,Real,0.0019,0.9981,0.35,True
+00269.png,REAL,Real,0.0004,0.9996,0.35,True
+00270.png,REAL,Real,0.0,1.0,0.35,True
+00271.png,REAL,Real,0.0001,0.9999,0.35,True
+00272.png,REAL,Real,0.0,1.0,0.35,True
+00273.png,REAL,Real,0.0,1.0,0.35,True
+00274.png,REAL,Real,0.0013,0.9987,0.35,True
+00275.png,REAL,Real,0.011,0.989,0.35,True
+00276.png,REAL,Real,0.0,1.0,0.35,True
+00277.png,REAL,Real,0.0,1.0,0.35,True
+00278.png,REAL,Real,0.0,1.0,0.35,True
+00279.png,REAL,Real,0.0353,0.9647,0.35,True
+00280.png,REAL,Real,0.0001,0.9999,0.35,True
+00281.png,REAL,Real,0.0,1.0,0.35,True
+00282.png,REAL,Real,0.0,1.0,0.35,True
+00283.png,REAL,Real,0.0,1.0,0.35,True
+00284.png,REAL,Real,0.0,1.0,0.35,True
+00285.png,REAL,Real,0.0001,0.9999,0.35,True
+00286.png,REAL,Real,0.0534,0.9466,0.35,True
+00287.png,REAL,Real,0.0,1.0,0.35,True
+00288.png,REAL,Real,0.0,1.0,0.35,True
+00289.png,REAL,Real,0.0001,0.9999,0.35,True
+00290.png,REAL,Real,0.0031,0.9969,0.35,True
+00291.png,REAL,Real,0.0,1.0,0.35,True
+00292.png,REAL,Real,0.0001,0.9999,0.35,True
+00293.png,REAL,Real,0.0022,0.9978,0.35,True
+00294.png,REAL,Real,0.0003,0.9997,0.35,True
+00295.png,REAL,Real,0.0002,0.9998,0.35,True
+00296.png,REAL,Real,0.0002,0.9998,0.35,True
+00297.png,REAL,Real,0.0,1.0,0.35,True
+00298.png,REAL,Real,0.0,1.0,0.35,True
+00299.png,REAL,Real,0.0,1.0,0.35,True
+00300.png,REAL,Real,0.0075,0.9925,0.35,True
+00301.png,REAL,Real,0.0001,0.9999,0.35,True
+00302.png,REAL,Real,0.0008,0.9992,0.35,True
+00303.png,REAL,Real,0.0015,0.9985,0.35,True
+00304.png,REAL,Real,0.0,1.0,0.35,True
+00305.png,REAL,Real,0.0015,0.9985,0.35,True
+00306.png,REAL,Real,0.0001,0.9999,0.35,True
+00307.png,REAL,Real,0.0001,0.9999,0.35,True
+00308.png,REAL,Real,0.0003,0.9997,0.35,True
+00309.png,REAL,AI Generated,0.9569,0.9569,0.35,False
+00310.png,REAL,Real,0.0,1.0,0.35,True
+00311.png,REAL,Real,0.0004,0.9996,0.35,True
+00312.png,REAL,Real,0.0,1.0,0.35,True
+00313.png,REAL,Real,0.0,1.0,0.35,True
+00314.png,REAL,Real,0.0,1.0,0.35,True
+00315.png,REAL,Real,0.0001,0.9999,0.35,True
+00316.png,REAL,Real,0.0002,0.9998,0.35,True
+00317.png,REAL,Real,0.0,1.0,0.35,True
+00318.png,REAL,Real,0.0138,0.9862,0.35,True
+00319.png,REAL,Real,0.0,1.0,0.35,True
+00320.png,REAL,Real,0.0,1.0,0.35,True
+00321.png,REAL,Real,0.0009,0.9991,0.35,True
+00322.png,REAL,Real,0.062,0.938,0.35,True
+00323.png,REAL,Real,0.0001,0.9999,0.35,True
+00324.png,REAL,Real,0.0,1.0,0.35,True
+00325.png,REAL,Real,0.0001,0.9999,0.35,True
+00326.png,REAL,Real,0.0001,0.9999,0.35,True
+00327.png,REAL,Real,0.0025,0.9975,0.35,True
+00328.png,REAL,Real,0.0001,0.9999,0.35,True
+00329.png,REAL,Real,0.0005,0.9995,0.35,True
+00330.png,REAL,Real,0.0,1.0,0.35,True
+00331.png,REAL,Real,0.002,0.998,0.35,True
+00332.png,REAL,Real,0.0003,0.9997,0.35,True
+00333.png,REAL,Real,0.0,1.0,0.35,True
+00334.png,REAL,Real,0.0008,0.9992,0.35,True
+00335.png,REAL,Real,0.0168,0.9832,0.35,True
+00336.png,REAL,Real,0.0001,0.9999,0.35,True
+00337.png,REAL,Real,0.0015,0.9985,0.35,True
+00338.png,REAL,Real,0.0,1.0,0.35,True
+00339.png,REAL,Real,0.0,1.0,0.35,True
+00340.png,REAL,Real,0.0001,0.9999,0.35,True
+00341.png,REAL,Real,0.0001,0.9999,0.35,True
+00342.png,REAL,Real,0.0001,0.9999,0.35,True
+00343.png,REAL,Real,0.0,1.0,0.35,True
+00344.png,REAL,Real,0.0227,0.9773,0.35,True
+00345.png,REAL,Real,0.0,1.0,0.35,True
+00346.png,REAL,AI Generated,0.5405,0.5405,0.35,False
+00347.png,REAL,Real,0.0045,0.9955,0.35,True
+00348.png,REAL,Real,0.0001,0.9999,0.35,True
+00349.png,REAL,Real,0.0001,0.9999,0.35,True
+00350.png,REAL,Real,0.0,1.0,0.35,True
+00351.png,REAL,Real,0.0002,0.9998,0.35,True
+00352.png,REAL,Real,0.0003,0.9997,0.35,True
+00353.png,REAL,Real,0.0008,0.9992,0.35,True
+00354.png,REAL,Real,0.0026,0.9974,0.35,True
+00355.png,REAL,Real,0.0001,0.9999,0.35,True
+00356.png,REAL,Real,0.0002,0.9998,0.35,True
+00357.png,REAL,Real,0.0003,0.9997,0.35,True
+00358.png,REAL,Real,0.0133,0.9867,0.35,True
+00359.png,REAL,Real,0.0003,0.9997,0.35,True
+00360.png,REAL,Real,0.0007,0.9993,0.35,True
+00361.png,REAL,Real,0.0002,0.9998,0.35,True
+00362.png,REAL,Real,0.0002,0.9998,0.35,True
+00363.png,REAL,Real,0.0034,0.9966,0.35,True
+00364.png,REAL,Real,0.0,1.0,0.35,True
+00365.png,REAL,Real,0.0,1.0,0.35,True
+00366.png,REAL,Real,0.0001,0.9999,0.35,True
+00367.png,REAL,Real,0.0104,0.9896,0.35,True
+00368.png,REAL,Real,0.0,1.0,0.35,True
+00369.png,REAL,Real,0.0,1.0,0.35,True
+00370.png,REAL,Real,0.0,1.0,0.35,True
+00371.png,REAL,Real,0.0,1.0,0.35,True
+00372.png,REAL,Real,0.1154,0.8846,0.35,True
+00373.png,REAL,Real,0.0487,0.9513,0.35,True
+00374.png,REAL,Real,0.0024,0.9976,0.35,True
+00375.png,REAL,Real,0.0015,0.9985,0.35,True
+00376.png,REAL,Real,0.0002,0.9998,0.35,True
+00377.png,REAL,Real,0.0001,0.9999,0.35,True
+00378.png,REAL,Real,0.0036,0.9964,0.35,True
+00379.png,REAL,Real,0.036,0.964,0.35,True
+00380.png,REAL,Real,0.0013,0.9987,0.35,True
+00381.png,REAL,Real,0.0,1.0,0.35,True
+00382.png,REAL,Real,0.0002,0.9998,0.35,True
+00383.png,REAL,Real,0.0,1.0,0.35,True
+00384.png,REAL,Real,0.0,1.0,0.35,True
+00385.png,REAL,Real,0.0028,0.9972,0.35,True
+00386.png,REAL,Real,0.0003,0.9997,0.35,True
+00387.png,REAL,Real,0.0,1.0,0.35,True
+00388.png,REAL,Real,0.0001,0.9999,0.35,True
+00389.png,REAL,Real,0.0,1.0,0.35,True
+00390.png,REAL,Real,0.0006,0.9994,0.35,True
+00391.png,REAL,Real,0.0,1.0,0.35,True
+00392.png,REAL,Real,0.0021,0.9979,0.35,True
+00393.png,REAL,Real,0.0,1.0,0.35,True
+00394.png,REAL,Real,0.0,1.0,0.35,True
+00395.png,REAL,Real,0.0002,0.9998,0.35,True
+00396.png,REAL,Real,0.0001,0.9999,0.35,True
+00397.png,REAL,AI Generated,0.9988,0.9988,0.35,False
+00398.png,REAL,Real,0.0002,0.9998,0.35,True
+00399.png,REAL,Real,0.0016,0.9984,0.35,True
+00400.png,REAL,Real,0.001,0.999,0.35,True
+00401.png,REAL,Real,0.0004,0.9996,0.35,True
+00402.png,REAL,Real,0.0,1.0,0.35,True
+00403.png,REAL,Real,0.0,1.0,0.35,True
+00404.png,REAL,Real,0.0,1.0,0.35,True
+00405.png,REAL,Real,0.0017,0.9983,0.35,True
+00406.png,REAL,AI Generated,0.6733,0.6733,0.35,False
+00407.png,REAL,Real,0.0013,0.9987,0.35,True
+00408.png,REAL,Real,0.1647,0.8353,0.35,True
+00409.png,REAL,Real,0.0001,0.9999,0.35,True
+00410.png,REAL,Real,0.0006,0.9994,0.35,True
+00411.png,REAL,Real,0.0,1.0,0.35,True
+00412.png,REAL,Real,0.0002,0.9998,0.35,True
+00413.png,REAL,Real,0.0003,0.9997,0.35,True
+00414.png,REAL,Real,0.0,1.0,0.35,True
+00415.png,REAL,Real,0.0008,0.9992,0.35,True
+00416.png,REAL,Real,0.0001,0.9999,0.35,True
+00417.png,REAL,Real,0.0005,0.9995,0.35,True
+00418.png,REAL,Real,0.0002,0.9998,0.35,True
+00419.png,REAL,Real,0.0074,0.9926,0.35,True
+00420.png,REAL,Real,0.0,1.0,0.35,True
+00421.png,REAL,Real,0.0083,0.9917,0.35,True
+00422.png,REAL,Real,0.0003,0.9997,0.35,True
+00423.png,REAL,Real,0.0,1.0,0.35,True
+00424.png,REAL,Real,0.0039,0.9961,0.35,True
+00425.png,REAL,Real,0.0,1.0,0.35,True
+00426.png,REAL,Real,0.0004,0.9996,0.35,True
+00427.png,REAL,Real,0.0,1.0,0.35,True
+00428.png,REAL,Real,0.0044,0.9956,0.35,True
+00429.png,REAL,Real,0.0,1.0,0.35,True
+00430.png,REAL,Real,0.0,1.0,0.35,True
+00431.png,REAL,Real,0.0001,0.9999,0.35,True
+00432.png,REAL,Real,0.0035,0.9965,0.35,True
+00433.png,REAL,Real,0.0046,0.9954,0.35,True
+00434.png,REAL,Real,0.0,1.0,0.35,True
+00435.png,REAL,Real,0.0098,0.9902,0.35,True
+00436.png,REAL,Real,0.0,1.0,0.35,True
+00437.png,REAL,Real,0.0006,0.9994,0.35,True
+00438.png,REAL,Real,0.0,1.0,0.35,True
+00439.png,REAL,Real,0.0,1.0,0.35,True
+00440.png,REAL,Real,0.0011,0.9989,0.35,True
+00441.png,REAL,Real,0.0,1.0,0.35,True
+00442.png,REAL,Real,0.0,1.0,0.35,True
+00443.png,REAL,Real,0.0,1.0,0.35,True
+00444.png,REAL,Real,0.0003,0.9997,0.35,True
+00445.png,REAL,Real,0.0002,0.9998,0.35,True
+00446.png,REAL,Real,0.0337,0.9663,0.35,True
+00447.png,REAL,Real,0.0,1.0,0.35,True
+00448.png,REAL,Real,0.0034,0.9966,0.35,True
+00449.png,REAL,Real,0.0002,0.9998,0.35,True
+00450.png,REAL,Real,0.0002,0.9998,0.35,True
+00451.png,REAL,Real,0.0,1.0,0.35,True
+00452.png,REAL,Real,0.0001,0.9999,0.35,True
+00453.png,REAL,Real,0.0026,0.9974,0.35,True
+00454.png,REAL,Real,0.0054,0.9946,0.35,True
+00455.png,REAL,Real,0.0005,0.9995,0.35,True
+00456.png,REAL,Real,0.001,0.999,0.35,True
+00457.png,REAL,Real,0.0001,0.9999,0.35,True
+00458.png,REAL,Real,0.0,1.0,0.35,True
+00459.png,REAL,Real,0.0006,0.9994,0.35,True
+00460.png,REAL,Real,0.0002,0.9998,0.35,True
+00461.png,REAL,Real,0.0001,0.9999,0.35,True
+00462.png,REAL,Real,0.0,1.0,0.35,True
+00463.png,REAL,Real,0.0001,0.9999,0.35,True
+00464.png,REAL,Real,0.0002,0.9998,0.35,True
+00465.png,REAL,Real,0.0,1.0,0.35,True
+00466.png,REAL,Real,0.0009,0.9991,0.35,True
+00467.png,REAL,Real,0.0,1.0,0.35,True
+00468.png,REAL,Real,0.0001,0.9999,0.35,True
+00469.png,REAL,Real,0.0004,0.9996,0.35,True
+00470.png,REAL,Real,0.0,1.0,0.35,True
+00471.png,REAL,Real,0.0,1.0,0.35,True
+00472.png,REAL,Real,0.0001,0.9999,0.35,True
+00473.png,REAL,Real,0.0002,0.9998,0.35,True
+00474.png,REAL,Real,0.001,0.999,0.35,True
+00475.png,REAL,Real,0.0,1.0,0.35,True
+00476.png,REAL,Real,0.0005,0.9995,0.35,True
+00477.png,REAL,Real,0.0593,0.9407,0.35,True
+00478.png,REAL,Real,0.0001,0.9999,0.35,True
+00479.png,REAL,Real,0.0002,0.9998,0.35,True
+00480.png,REAL,Real,0.0002,0.9998,0.35,True
+00481.png,REAL,Real,0.3239,0.6761,0.35,True
+00482.png,REAL,Real,0.0,1.0,0.35,True
+00483.png,REAL,Real,0.0,1.0,0.35,True
+00484.png,REAL,Real,0.0,1.0,0.35,True
+00485.png,REAL,Real,0.0,1.0,0.35,True
+00486.png,REAL,Real,0.0001,0.9999,0.35,True
+00487.png,REAL,Real,0.0,1.0,0.35,True
+00488.png,REAL,Real,0.0031,0.9969,0.35,True
+00489.png,REAL,Real,0.0,1.0,0.35,True
+00490.png,REAL,Real,0.0002,0.9998,0.35,True
+00491.png,REAL,Real,0.0,1.0,0.35,True
+00492.png,REAL,Real,0.0002,0.9998,0.35,True
+00493.png,REAL,Real,0.0,1.0,0.35,True
+00494.png,REAL,Real,0.0,1.0,0.35,True
+00495.png,REAL,Real,0.1776,0.8224,0.35,True
+00496.png,REAL,Real,0.0001,0.9999,0.35,True
+00497.png,REAL,Real,0.0,1.0,0.35,True
+00498.png,REAL,Real,0.0008,0.9992,0.35,True
+00499.png,REAL,Real,0.0,1.0,0.35,True
+00000.png,AI,AI Generated,1.0,1.0,0.35,True
+00001.png,AI,AI Generated,0.3855,0.3855,0.35,True
+00002.png,AI,AI Generated,1.0,1.0,0.35,True
+00003.png,AI,AI Generated,1.0,1.0,0.35,True
+00004.png,AI,AI Generated,1.0,1.0,0.35,True
+00005.png,AI,AI Generated,1.0,1.0,0.35,True
+00006.png,AI,AI Generated,1.0,1.0,0.35,True
+00007.png,AI,AI Generated,1.0,1.0,0.35,True
+00008.png,AI,AI Generated,1.0,1.0,0.35,True
+00009.png,AI,AI Generated,1.0,1.0,0.35,True
+00010.png,AI,AI Generated,1.0,1.0,0.35,True
+00011.png,AI,AI Generated,1.0,1.0,0.35,True
+00012.png,AI,AI Generated,1.0,1.0,0.35,True
+00013.png,AI,AI Generated,1.0,1.0,0.35,True
+00014.png,AI,AI Generated,1.0,1.0,0.35,True
+00015.png,AI,AI Generated,0.9992,0.9992,0.35,True
+00016.png,AI,AI Generated,1.0,1.0,0.35,True
+00017.png,AI,AI Generated,1.0,1.0,0.35,True
+00018.png,AI,AI Generated,1.0,1.0,0.35,True
+00019.png,AI,AI Generated,1.0,1.0,0.35,True
+00020.png,AI,AI Generated,1.0,1.0,0.35,True
+00021.png,AI,AI Generated,1.0,1.0,0.35,True
+00022.png,AI,AI Generated,1.0,1.0,0.35,True
+00023.png,AI,AI Generated,1.0,1.0,0.35,True
+00024.png,AI,AI Generated,0.9992,0.9992,0.35,True
+00025.png,AI,AI Generated,1.0,1.0,0.35,True
+00026.png,AI,AI Generated,1.0,1.0,0.35,True
+00027.png,AI,AI Generated,0.9997,0.9997,0.35,True
+00028.png,AI,AI Generated,1.0,1.0,0.35,True
+00029.png,AI,AI Generated,1.0,1.0,0.35,True
+00030.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00031.png,AI,AI Generated,0.9962,0.9962,0.35,True
+00032.png,AI,AI Generated,1.0,1.0,0.35,True
+00033.png,AI,AI Generated,1.0,1.0,0.35,True
+00034.png,AI,AI Generated,1.0,1.0,0.35,True
+00035.png,AI,AI Generated,1.0,1.0,0.35,True
+00036.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00037.png,AI,AI Generated,1.0,1.0,0.35,True
+00038.png,AI,AI Generated,1.0,1.0,0.35,True
+00039.png,AI,AI Generated,1.0,1.0,0.35,True
+00040.png,AI,AI Generated,0.9571,0.9571,0.35,True
+00041.png,AI,AI Generated,0.9988,0.9988,0.35,True
+00042.png,AI,AI Generated,1.0,1.0,0.35,True
+00043.png,AI,AI Generated,0.9699,0.9699,0.35,True
+00044.png,AI,AI Generated,1.0,1.0,0.35,True
+00045.png,AI,AI Generated,1.0,1.0,0.35,True
+00046.png,AI,AI Generated,1.0,1.0,0.35,True
+00047.png,AI,AI Generated,0.9987,0.9987,0.35,True
+00048.png,AI,AI Generated,1.0,1.0,0.35,True
+00049.png,AI,AI Generated,1.0,1.0,0.35,True
+00050.png,AI,AI Generated,1.0,1.0,0.35,True
+00051.png,AI,AI Generated,1.0,1.0,0.35,True
+00052.png,AI,AI Generated,1.0,1.0,0.35,True
+00053.png,AI,AI Generated,1.0,1.0,0.35,True
+00054.png,AI,AI Generated,1.0,1.0,0.35,True
+00055.png,AI,AI Generated,1.0,1.0,0.35,True
+00056.png,AI,AI Generated,1.0,1.0,0.35,True
+00057.png,AI,AI Generated,1.0,1.0,0.35,True
+00058.png,AI,AI Generated,1.0,1.0,0.35,True
+00059.png,AI,AI Generated,0.9989,0.9989,0.35,True
+00060.png,AI,AI Generated,1.0,1.0,0.35,True
+00061.png,AI,AI Generated,1.0,1.0,0.35,True
+00062.png,AI,AI Generated,1.0,1.0,0.35,True
+00063.png,AI,AI Generated,1.0,1.0,0.35,True
+00064.png,AI,AI Generated,0.9935,0.9935,0.35,True
+00065.png,AI,AI Generated,0.9982,0.9982,0.35,True
+00066.png,AI,AI Generated,0.9611,0.9611,0.35,True
+00067.png,AI,AI Generated,1.0,1.0,0.35,True
+00068.png,AI,AI Generated,0.9677,0.9677,0.35,True
+00069.png,AI,AI Generated,1.0,1.0,0.35,True
+00070.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00071.png,AI,AI Generated,0.9802,0.9802,0.35,True
+00072.png,AI,AI Generated,1.0,1.0,0.35,True
+00073.png,AI,AI Generated,1.0,1.0,0.35,True
+00074.png,AI,AI Generated,1.0,1.0,0.35,True
+00075.png,AI,AI Generated,0.9995,0.9995,0.35,True
+00076.png,AI,AI Generated,1.0,1.0,0.35,True
+00077.png,AI,AI Generated,1.0,1.0,0.35,True
+00078.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00079.png,AI,AI Generated,1.0,1.0,0.35,True
+00080.png,AI,AI Generated,1.0,1.0,0.35,True
+00081.png,AI,AI Generated,0.9951,0.9951,0.35,True
+00082.png,AI,AI Generated,1.0,1.0,0.35,True
+00083.png,AI,AI Generated,1.0,1.0,0.35,True
+00084.png,AI,AI Generated,1.0,1.0,0.35,True
+00085.png,AI,AI Generated,1.0,1.0,0.35,True
+00086.png,AI,AI Generated,0.9992,0.9992,0.35,True
+00087.png,AI,AI Generated,1.0,1.0,0.35,True
+00088.png,AI,AI Generated,1.0,1.0,0.35,True
+00089.png,AI,AI Generated,0.9995,0.9995,0.35,True
+00090.png,AI,AI Generated,1.0,1.0,0.35,True
+00091.png,AI,AI Generated,0.9913,0.9913,0.35,True
+00092.png,AI,AI Generated,0.9597,0.9597,0.35,True
+00093.png,AI,AI Generated,1.0,1.0,0.35,True
+00094.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00095.png,AI,AI Generated,0.9998,0.9998,0.35,True
+00096.png,AI,AI Generated,1.0,1.0,0.35,True
+00097.png,AI,AI Generated,0.9964,0.9964,0.35,True
+00098.png,AI,AI Generated,0.8447,0.8447,0.35,True
+00099.png,AI,AI Generated,0.9998,0.9998,0.35,True
+00100.png,AI,AI Generated,1.0,1.0,0.35,True
+00101.png,AI,AI Generated,0.9253,0.9253,0.35,True
+00102.png,AI,AI Generated,1.0,1.0,0.35,True
+00103.png,AI,AI Generated,1.0,1.0,0.35,True
+00104.png,AI,AI Generated,1.0,1.0,0.35,True
+00105.png,AI,AI Generated,1.0,1.0,0.35,True
+00106.png,AI,AI Generated,1.0,1.0,0.35,True
+00107.png,AI,AI Generated,1.0,1.0,0.35,True
+00108.png,AI,AI Generated,1.0,1.0,0.35,True
+00109.png,AI,AI Generated,0.9997,0.9997,0.35,True
+00110.png,AI,AI Generated,1.0,1.0,0.35,True
+00111.png,AI,AI Generated,0.9998,0.9998,0.35,True
+00112.png,AI,AI Generated,1.0,1.0,0.35,True
+00113.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00114.png,AI,AI Generated,0.8623,0.8623,0.35,True
+00115.png,AI,AI Generated,1.0,1.0,0.35,True
+00116.png,AI,AI Generated,1.0,1.0,0.35,True
+00117.png,AI,AI Generated,0.9967,0.9967,0.35,True
+00118.png,AI,AI Generated,1.0,1.0,0.35,True
+00119.png,AI,AI Generated,1.0,1.0,0.35,True
+00120.png,AI,AI Generated,1.0,1.0,0.35,True
+00121.png,AI,AI Generated,0.9995,0.9995,0.35,True
+00122.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00123.png,AI,AI Generated,1.0,1.0,0.35,True
+00124.png,AI,AI Generated,1.0,1.0,0.35,True
+00125.png,AI,AI Generated,1.0,1.0,0.35,True
+00126.png,AI,AI Generated,1.0,1.0,0.35,True
+00127.png,AI,AI Generated,1.0,1.0,0.35,True
+00128.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00129.png,AI,AI Generated,1.0,1.0,0.35,True
+00130.png,AI,AI Generated,1.0,1.0,0.35,True
+00131.png,AI,AI Generated,1.0,1.0,0.35,True
+00132.png,AI,AI Generated,0.9997,0.9997,0.35,True
+00133.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00134.png,AI,AI Generated,1.0,1.0,0.35,True
+00135.png,AI,AI Generated,1.0,1.0,0.35,True
+00136.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00137.png,AI,AI Generated,1.0,1.0,0.35,True
+00138.png,AI,AI Generated,0.9994,0.9994,0.35,True
+00139.png,AI,AI Generated,1.0,1.0,0.35,True
+00140.png,AI,AI Generated,0.9988,0.9988,0.35,True
+00141.png,AI,AI Generated,1.0,1.0,0.35,True
+00142.png,AI,AI Generated,1.0,1.0,0.35,True
+00143.png,AI,AI Generated,0.9997,0.9997,0.35,True
+00144.png,AI,AI Generated,1.0,1.0,0.35,True
+00145.png,AI,AI Generated,0.9936,0.9936,0.35,True
+00146.png,AI,AI Generated,1.0,1.0,0.35,True
+00147.png,AI,AI Generated,0.9995,0.9995,0.35,True
+00148.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00149.png,AI,AI Generated,1.0,1.0,0.35,True
+00150.png,AI,AI Generated,1.0,1.0,0.35,True
+00151.png,AI,AI Generated,1.0,1.0,0.35,True
+00152.png,AI,AI Generated,1.0,1.0,0.35,True
+00153.png,AI,AI Generated,1.0,1.0,0.35,True
+00154.png,AI,AI Generated,0.9994,0.9994,0.35,True
+00155.png,AI,AI Generated,1.0,1.0,0.35,True
+00156.png,AI,AI Generated,1.0,1.0,0.35,True
+00157.png,AI,AI Generated,1.0,1.0,0.35,True
+00158.png,AI,AI Generated,1.0,1.0,0.35,True
+00159.png,AI,AI Generated,1.0,1.0,0.35,True
+00160.png,AI,AI Generated,1.0,1.0,0.35,True
+00161.png,AI,AI Generated,1.0,1.0,0.35,True
+00162.png,AI,AI Generated,0.9992,0.9992,0.35,True
+00163.png,AI,AI Generated,1.0,1.0,0.35,True
+00164.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00165.png,AI,AI Generated,1.0,1.0,0.35,True
+00166.png,AI,AI Generated,0.9996,0.9996,0.35,True
+00167.png,AI,AI Generated,0.5542,0.5542,0.35,True
+00168.png,AI,AI Generated,1.0,1.0,0.35,True
+00169.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00170.png,AI,AI Generated,1.0,1.0,0.35,True
+00171.png,AI,AI Generated,1.0,1.0,0.35,True
+00172.png,AI,AI Generated,0.9979,0.9979,0.35,True
+00173.png,AI,AI Generated,1.0,1.0,0.35,True
+00174.png,AI,AI Generated,0.9998,0.9998,0.35,True
+00175.png,AI,AI Generated,1.0,1.0,0.35,True
+00176.png,AI,AI Generated,1.0,1.0,0.35,True
+00177.png,AI,AI Generated,1.0,1.0,0.35,True
+00178.png,AI,AI Generated,1.0,1.0,0.35,True
+00179.png,AI,AI Generated,1.0,1.0,0.35,True
+00180.png,AI,AI Generated,1.0,1.0,0.35,True
+00181.png,AI,AI Generated,1.0,1.0,0.35,True
+00182.png,AI,AI Generated,1.0,1.0,0.35,True
+00183.png,AI,AI Generated,1.0,1.0,0.35,True
+00184.png,AI,AI Generated,1.0,1.0,0.35,True
+00185.png,AI,AI Generated,1.0,1.0,0.35,True
+00186.png,AI,AI Generated,1.0,1.0,0.35,True
+00187.png,AI,AI Generated,0.9996,0.9996,0.35,True
+00188.png,AI,AI Generated,0.9977,0.9977,0.35,True
+00189.png,AI,AI Generated,1.0,1.0,0.35,True
+00190.png,AI,AI Generated,1.0,1.0,0.35,True
+00191.png,AI,AI Generated,1.0,1.0,0.35,True
+00192.png,AI,AI Generated,1.0,1.0,0.35,True
+00193.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00194.png,AI,AI Generated,1.0,1.0,0.35,True
+00195.png,AI,AI Generated,0.9958,0.9958,0.35,True
+00196.png,AI,AI Generated,1.0,1.0,0.35,True
+00197.png,AI,AI Generated,1.0,1.0,0.35,True
+00198.png,AI,AI Generated,1.0,1.0,0.35,True
+00199.png,AI,AI Generated,1.0,1.0,0.35,True
+00200.png,AI,AI Generated,1.0,1.0,0.35,True
+00201.png,AI,AI Generated,1.0,1.0,0.35,True
+00202.png,AI,AI Generated,0.4091,0.4091,0.35,True
+00203.png,AI,AI Generated,1.0,1.0,0.35,True
+00204.png,AI,AI Generated,0.9997,0.9997,0.35,True
+00205.png,AI,AI Generated,1.0,1.0,0.35,True
+00206.png,AI,AI Generated,1.0,1.0,0.35,True
+00207.png,AI,AI Generated,1.0,1.0,0.35,True
+00208.png,AI,AI Generated,0.9978,0.9978,0.35,True
+00209.png,AI,AI Generated,1.0,1.0,0.35,True
+00210.png,AI,AI Generated,1.0,1.0,0.35,True
+00211.png,AI,AI Generated,0.9998,0.9998,0.35,True
+00212.png,AI,AI Generated,1.0,1.0,0.35,True
+00213.png,AI,AI Generated,1.0,1.0,0.35,True
+00214.png,AI,AI Generated,1.0,1.0,0.35,True
+00215.png,AI,AI Generated,0.9992,0.9992,0.35,True
+00216.png,AI,AI Generated,0.9967,0.9967,0.35,True
+00217.png,AI,AI Generated,1.0,1.0,0.35,True
+00218.png,AI,AI Generated,1.0,1.0,0.35,True
+00219.png,AI,AI Generated,1.0,1.0,0.35,True
+00220.png,AI,AI Generated,1.0,1.0,0.35,True
+00221.png,AI,AI Generated,0.9991,0.9991,0.35,True
+00222.png,AI,AI Generated,1.0,1.0,0.35,True
+00223.png,AI,AI Generated,1.0,1.0,0.35,True
+00224.png,AI,AI Generated,1.0,1.0,0.35,True
+00225.png,AI,AI Generated,0.998,0.998,0.35,True
+00226.png,AI,AI Generated,0.9986,0.9986,0.35,True
+00227.png,AI,AI Generated,1.0,1.0,0.35,True
+00228.png,AI,AI Generated,1.0,1.0,0.35,True
+00229.png,AI,AI Generated,1.0,1.0,0.35,True
+00230.png,AI,AI Generated,1.0,1.0,0.35,True
+00231.png,AI,AI Generated,1.0,1.0,0.35,True
+00232.png,AI,AI Generated,1.0,1.0,0.35,True
+00233.png,AI,AI Generated,1.0,1.0,0.35,True
+00234.png,AI,AI Generated,0.9993,0.9993,0.35,True
+00235.png,AI,AI Generated,1.0,1.0,0.35,True
+00236.png,AI,AI Generated,1.0,1.0,0.35,True
+00237.png,AI,AI Generated,1.0,1.0,0.35,True
+00238.png,AI,AI Generated,1.0,1.0,0.35,True
+00239.png,AI,AI Generated,0.9994,0.9994,0.35,True
+00240.png,AI,AI Generated,1.0,1.0,0.35,True
+00241.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00242.png,AI,AI Generated,1.0,1.0,0.35,True
+00243.png,AI,AI Generated,1.0,1.0,0.35,True
+00244.png,AI,AI Generated,0.9905,0.9905,0.35,True
+00245.png,AI,AI Generated,1.0,1.0,0.35,True
+00246.png,AI,AI Generated,0.9993,0.9993,0.35,True
+00247.png,AI,AI Generated,0.9998,0.9998,0.35,True
+00248.png,AI,AI Generated,0.9997,0.9997,0.35,True
+00249.png,AI,AI Generated,1.0,1.0,0.35,True
+00250.png,AI,AI Generated,1.0,1.0,0.35,True
+00251.png,AI,AI Generated,1.0,1.0,0.35,True
+00252.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00253.png,AI,AI Generated,1.0,1.0,0.35,True
+00254.png,AI,AI Generated,0.9991,0.9991,0.35,True
+00255.png,AI,AI Generated,0.5888,0.5888,0.35,True
+00256.png,AI,AI Generated,1.0,1.0,0.35,True
+00257.png,AI,AI Generated,1.0,1.0,0.35,True
+00258.png,AI,AI Generated,1.0,1.0,0.35,True
+00259.png,AI,AI Generated,1.0,1.0,0.35,True
+00260.png,AI,AI Generated,0.4124,0.4124,0.35,True
+00261.png,AI,AI Generated,1.0,1.0,0.35,True
+00262.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00263.png,AI,AI Generated,1.0,1.0,0.35,True
+00264.png,AI,AI Generated,0.9945,0.9945,0.35,True
+00265.png,AI,AI Generated,1.0,1.0,0.35,True
+00266.png,AI,AI Generated,1.0,1.0,0.35,True
+00267.png,AI,AI Generated,1.0,1.0,0.35,True
+00268.png,AI,AI Generated,0.9993,0.9993,0.35,True
+00269.png,AI,AI Generated,1.0,1.0,0.35,True
+00270.png,AI,AI Generated,0.9995,0.9995,0.35,True
+00271.png,AI,AI Generated,0.998,0.998,0.35,True
+00272.png,AI,AI Generated,1.0,1.0,0.35,True
+00273.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00274.png,AI,AI Generated,1.0,1.0,0.35,True
+00275.png,AI,AI Generated,1.0,1.0,0.35,True
+00276.png,AI,AI Generated,1.0,1.0,0.35,True
+00277.png,AI,AI Generated,1.0,1.0,0.35,True
+00278.png,AI,Real,0.0023,0.9977,0.35,False
+00279.png,AI,AI Generated,1.0,1.0,0.35,True
+00280.png,AI,AI Generated,1.0,1.0,0.35,True
+00281.png,AI,AI Generated,0.9989,0.9989,0.35,True
+00282.png,AI,AI Generated,1.0,1.0,0.35,True
+00283.png,AI,AI Generated,0.9978,0.9978,0.35,True
+00284.png,AI,AI Generated,1.0,1.0,0.35,True
+00285.png,AI,AI Generated,1.0,1.0,0.35,True
+00286.png,AI,AI Generated,0.9831,0.9831,0.35,True
+00287.png,AI,AI Generated,1.0,1.0,0.35,True
+00288.png,AI,AI Generated,1.0,1.0,0.35,True
+00289.png,AI,AI Generated,1.0,1.0,0.35,True
+00290.png,AI,AI Generated,1.0,1.0,0.35,True
+00291.png,AI,AI Generated,1.0,1.0,0.35,True
+00292.png,AI,AI Generated,1.0,1.0,0.35,True
+00293.png,AI,AI Generated,1.0,1.0,0.35,True
+00294.png,AI,AI Generated,1.0,1.0,0.35,True
+00295.png,AI,AI Generated,1.0,1.0,0.35,True
+00296.png,AI,AI Generated,1.0,1.0,0.35,True
+00297.png,AI,AI Generated,1.0,1.0,0.35,True
+00298.png,AI,AI Generated,0.9944,0.9944,0.35,True
+00299.png,AI,AI Generated,1.0,1.0,0.35,True
+00300.png,AI,AI Generated,1.0,1.0,0.35,True
+00301.png,AI,AI Generated,1.0,1.0,0.35,True
+00302.png,AI,AI Generated,1.0,1.0,0.35,True
+00303.png,AI,AI Generated,1.0,1.0,0.35,True
+00304.png,AI,AI Generated,1.0,1.0,0.35,True
+00305.png,AI,AI Generated,1.0,1.0,0.35,True
+00306.png,AI,AI Generated,0.7865,0.7865,0.35,True
+00307.png,AI,AI Generated,1.0,1.0,0.35,True
+00308.png,AI,AI Generated,1.0,1.0,0.35,True
+00309.png,AI,AI Generated,0.9992,0.9992,0.35,True
+00310.png,AI,AI Generated,1.0,1.0,0.35,True
+00311.png,AI,AI Generated,1.0,1.0,0.35,True
+00312.png,AI,AI Generated,1.0,1.0,0.35,True
+00313.png,AI,Real,0.0019,0.9981,0.35,False
+00314.png,AI,AI Generated,1.0,1.0,0.35,True
+00315.png,AI,AI Generated,1.0,1.0,0.35,True
+00316.png,AI,AI Generated,1.0,1.0,0.35,True
+00317.png,AI,AI Generated,1.0,1.0,0.35,True
+00318.png,AI,AI Generated,0.9995,0.9995,0.35,True
+00319.png,AI,AI Generated,0.9746,0.9746,0.35,True
+00320.png,AI,AI Generated,0.9994,0.9994,0.35,True
+00321.png,AI,AI Generated,1.0,1.0,0.35,True
+00322.png,AI,AI Generated,1.0,1.0,0.35,True
+00323.png,AI,AI Generated,1.0,1.0,0.35,True
+00324.png,AI,AI Generated,1.0,1.0,0.35,True
+00325.png,AI,AI Generated,0.5303,0.5303,0.35,True
+00326.png,AI,AI Generated,1.0,1.0,0.35,True
+00327.png,AI,AI Generated,1.0,1.0,0.35,True
+00328.png,AI,AI Generated,1.0,1.0,0.35,True
+00329.png,AI,AI Generated,1.0,1.0,0.35,True
+00330.png,AI,AI Generated,1.0,1.0,0.35,True
+00331.png,AI,AI Generated,1.0,1.0,0.35,True
+00332.png,AI,Real,0.302,0.698,0.35,False
+00333.png,AI,AI Generated,1.0,1.0,0.35,True
+00334.png,AI,AI Generated,1.0,1.0,0.35,True
+00335.png,AI,AI Generated,0.9216,0.9216,0.35,True
+00336.png,AI,AI Generated,1.0,1.0,0.35,True
+00337.png,AI,AI Generated,1.0,1.0,0.35,True
+00338.png,AI,AI Generated,0.6825,0.6825,0.35,True
+00339.png,AI,AI Generated,1.0,1.0,0.35,True
+00340.png,AI,AI Generated,1.0,1.0,0.35,True
+00341.png,AI,AI Generated,1.0,1.0,0.35,True
+00342.png,AI,AI Generated,1.0,1.0,0.35,True
+00343.png,AI,AI Generated,1.0,1.0,0.35,True
+00344.png,AI,AI Generated,1.0,1.0,0.35,True
+00345.png,AI,AI Generated,1.0,1.0,0.35,True
+00346.png,AI,AI Generated,0.9886,0.9886,0.35,True
+00347.png,AI,AI Generated,1.0,1.0,0.35,True
+00348.png,AI,AI Generated,1.0,1.0,0.35,True
+00349.png,AI,AI Generated,1.0,1.0,0.35,True
+00350.png,AI,AI Generated,1.0,1.0,0.35,True
+00351.png,AI,AI Generated,0.9863,0.9863,0.35,True
+00352.png,AI,AI Generated,1.0,1.0,0.35,True
+00353.png,AI,AI Generated,1.0,1.0,0.35,True
+00354.png,AI,AI Generated,1.0,1.0,0.35,True
+00355.png,AI,AI Generated,1.0,1.0,0.35,True
+00356.png,AI,AI Generated,0.998,0.998,0.35,True
+00357.png,AI,AI Generated,0.9116,0.9116,0.35,True
+00358.png,AI,AI Generated,1.0,1.0,0.35,True
+00359.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00360.png,AI,AI Generated,1.0,1.0,0.35,True
+00361.png,AI,AI Generated,1.0,1.0,0.35,True
+00362.png,AI,AI Generated,1.0,1.0,0.35,True
+00363.png,AI,AI Generated,1.0,1.0,0.35,True
+00364.png,AI,AI Generated,1.0,1.0,0.35,True
+00365.png,AI,AI Generated,1.0,1.0,0.35,True
+00366.png,AI,AI Generated,0.9528,0.9528,0.35,True
+00367.png,AI,AI Generated,1.0,1.0,0.35,True
+00368.png,AI,AI Generated,1.0,1.0,0.35,True
+00369.png,AI,AI Generated,0.5974,0.5974,0.35,True
+00370.png,AI,AI Generated,1.0,1.0,0.35,True
+00371.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00372.png,AI,AI Generated,1.0,1.0,0.35,True
+00373.png,AI,AI Generated,1.0,1.0,0.35,True
+00374.png,AI,AI Generated,0.5586,0.5586,0.35,True
+00375.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00376.png,AI,AI Generated,1.0,1.0,0.35,True
+00377.png,AI,AI Generated,0.9997,0.9997,0.35,True
+00378.png,AI,AI Generated,0.9994,0.9994,0.35,True
+00379.png,AI,AI Generated,1.0,1.0,0.35,True
+00380.png,AI,AI Generated,1.0,1.0,0.35,True
+00381.png,AI,AI Generated,0.9923,0.9923,0.35,True
+00382.png,AI,AI Generated,1.0,1.0,0.35,True
+00383.png,AI,AI Generated,1.0,1.0,0.35,True
+00384.png,AI,AI Generated,0.9997,0.9997,0.35,True
+00385.png,AI,AI Generated,1.0,1.0,0.35,True
+00386.png,AI,AI Generated,1.0,1.0,0.35,True
+00387.png,AI,AI Generated,0.9917,0.9917,0.35,True
+00388.png,AI,AI Generated,0.9993,0.9993,0.35,True
+00389.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00390.png,AI,AI Generated,1.0,1.0,0.35,True
+00391.png,AI,AI Generated,1.0,1.0,0.35,True
+00392.png,AI,AI Generated,1.0,1.0,0.35,True
+00393.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00394.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00395.png,AI,AI Generated,1.0,1.0,0.35,True
+00396.png,AI,AI Generated,1.0,1.0,0.35,True
+00397.png,AI,AI Generated,1.0,1.0,0.35,True
+00398.png,AI,AI Generated,1.0,1.0,0.35,True
+00399.png,AI,AI Generated,1.0,1.0,0.35,True
+00400.png,AI,AI Generated,0.9925,0.9925,0.35,True
+00401.png,AI,AI Generated,1.0,1.0,0.35,True
+00402.png,AI,AI Generated,0.9976,0.9976,0.35,True
+00403.png,AI,AI Generated,0.9976,0.9976,0.35,True
+00404.png,AI,AI Generated,0.9995,0.9995,0.35,True
+00405.png,AI,AI Generated,1.0,1.0,0.35,True
+00406.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00407.png,AI,AI Generated,0.9991,0.9991,0.35,True
+00408.png,AI,AI Generated,1.0,1.0,0.35,True
+00409.png,AI,AI Generated,0.9947,0.9947,0.35,True
+00410.png,AI,AI Generated,1.0,1.0,0.35,True
+00411.png,AI,AI Generated,1.0,1.0,0.35,True
+00412.png,AI,AI Generated,1.0,1.0,0.35,True
+00413.png,AI,AI Generated,1.0,1.0,0.35,True
+00414.png,AI,AI Generated,0.9998,0.9998,0.35,True
+00415.png,AI,AI Generated,1.0,1.0,0.35,True
+00416.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00417.png,AI,AI Generated,1.0,1.0,0.35,True
+00418.png,AI,AI Generated,0.9863,0.9863,0.35,True
+00419.png,AI,AI Generated,1.0,1.0,0.35,True
+00420.png,AI,AI Generated,1.0,1.0,0.35,True
+00421.png,AI,AI Generated,1.0,1.0,0.35,True
+00422.png,AI,AI Generated,1.0,1.0,0.35,True
+00423.png,AI,AI Generated,0.9952,0.9952,0.35,True
+00424.png,AI,AI Generated,1.0,1.0,0.35,True
+00425.png,AI,AI Generated,1.0,1.0,0.35,True
+00426.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00427.png,AI,AI Generated,1.0,1.0,0.35,True
+00428.png,AI,AI Generated,1.0,1.0,0.35,True
+00429.png,AI,AI Generated,1.0,1.0,0.35,True
+00430.png,AI,AI Generated,1.0,1.0,0.35,True
+00431.png,AI,AI Generated,1.0,1.0,0.35,True
+00432.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00433.png,AI,AI Generated,1.0,1.0,0.35,True
+00434.png,AI,AI Generated,1.0,1.0,0.35,True
+00435.png,AI,AI Generated,1.0,1.0,0.35,True
+00436.png,AI,AI Generated,1.0,1.0,0.35,True
+00437.png,AI,AI Generated,1.0,1.0,0.35,True
+00438.png,AI,AI Generated,1.0,1.0,0.35,True
+00439.png,AI,AI Generated,1.0,1.0,0.35,True
+00440.png,AI,AI Generated,1.0,1.0,0.35,True
+00441.png,AI,AI Generated,1.0,1.0,0.35,True
+00442.png,AI,AI Generated,1.0,1.0,0.35,True
+00443.png,AI,AI Generated,1.0,1.0,0.35,True
+00444.png,AI,AI Generated,1.0,1.0,0.35,True
+00445.png,AI,AI Generated,1.0,1.0,0.35,True
+00446.png,AI,AI Generated,1.0,1.0,0.35,True
+00447.png,AI,AI Generated,1.0,1.0,0.35,True
+00448.png,AI,AI Generated,1.0,1.0,0.35,True
+00449.png,AI,AI Generated,0.9996,0.9996,0.35,True
+00450.png,AI,AI Generated,1.0,1.0,0.35,True
+00451.png,AI,AI Generated,1.0,1.0,0.35,True
+00452.png,AI,AI Generated,1.0,1.0,0.35,True
+00453.png,AI,AI Generated,1.0,1.0,0.35,True
+00454.png,AI,AI Generated,1.0,1.0,0.35,True
+00455.png,AI,AI Generated,0.9835,0.9835,0.35,True
+00456.png,AI,AI Generated,1.0,1.0,0.35,True
+00457.png,AI,AI Generated,1.0,1.0,0.35,True
+00458.png,AI,AI Generated,1.0,1.0,0.35,True
+00459.png,AI,AI Generated,1.0,1.0,0.35,True
+00460.png,AI,AI Generated,1.0,1.0,0.35,True
+00461.png,AI,AI Generated,1.0,1.0,0.35,True
+00462.png,AI,AI Generated,1.0,1.0,0.35,True
+00463.png,AI,AI Generated,0.9962,0.9962,0.35,True
+00464.png,AI,AI Generated,0.998,0.998,0.35,True
+00465.png,AI,AI Generated,1.0,1.0,0.35,True
+00466.png,AI,AI Generated,1.0,1.0,0.35,True
+00467.png,AI,AI Generated,1.0,1.0,0.35,True
+00468.png,AI,AI Generated,0.9943,0.9943,0.35,True
+00469.png,AI,AI Generated,1.0,1.0,0.35,True
+00470.png,AI,AI Generated,1.0,1.0,0.35,True
+00471.png,AI,AI Generated,1.0,1.0,0.35,True
+00472.png,AI,AI Generated,1.0,1.0,0.35,True
+00473.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00474.png,AI,AI Generated,1.0,1.0,0.35,True
+00475.png,AI,AI Generated,1.0,1.0,0.35,True
+00476.png,AI,AI Generated,1.0,1.0,0.35,True
+00477.png,AI,AI Generated,1.0,1.0,0.35,True
+00478.png,AI,AI Generated,1.0,1.0,0.35,True
+00479.png,AI,AI Generated,1.0,1.0,0.35,True
+00480.png,AI,AI Generated,1.0,1.0,0.35,True
+00481.png,AI,AI Generated,1.0,1.0,0.35,True
+00482.png,AI,AI Generated,1.0,1.0,0.35,True
+00483.png,AI,AI Generated,1.0,1.0,0.35,True
+00484.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00485.png,AI,AI Generated,1.0,1.0,0.35,True
+00486.png,AI,AI Generated,0.9737,0.9737,0.35,True
+00487.png,AI,AI Generated,1.0,1.0,0.35,True
+00488.png,AI,AI Generated,1.0,1.0,0.35,True
+00489.png,AI,AI Generated,1.0,1.0,0.35,True
+00490.png,AI,AI Generated,0.9984,0.9984,0.35,True
+00491.png,AI,AI Generated,1.0,1.0,0.35,True
+00492.png,AI,AI Generated,0.7174,0.7174,0.35,True
+00493.png,AI,AI Generated,1.0,1.0,0.35,True
+00494.png,AI,AI Generated,1.0,1.0,0.35,True
+00495.png,AI,AI Generated,0.9999,0.9999,0.35,True
+00496.png,AI,AI Generated,1.0,1.0,0.35,True
+00497.png,AI,AI Generated,1.0,1.0,0.35,True
+00498.png,AI,AI Generated,1.0,1.0,0.35,True
+00499.png,AI,AI Generated,1.0,1.0,0.35,True
