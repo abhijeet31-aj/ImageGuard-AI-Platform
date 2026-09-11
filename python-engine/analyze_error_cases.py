@@ -38,7 +38,7 @@ with open(
 # --------------------------------------------------
 
 forensic_lookup = {
-    row["filename"]: row
+    (row["filename"], row["label"]): row
     for row in forensic_rows
 }
 
@@ -65,7 +65,7 @@ for ai_row in wrong_predictions:
     filename = ai_row["filename"]
 
     forensic = forensic_lookup.get(
-        filename
+        (filename, ai_row["true_label"])
     )
 
     print()

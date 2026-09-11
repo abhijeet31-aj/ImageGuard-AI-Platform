@@ -15,6 +15,8 @@ from cv.forgery import analyze_forgery
 
 from ai.detector import detect_ai_image
 
+from services.fusion import predict_fusion
+
 from utils.csv_logger import save_ela_metrics
 from utils.forgery_csv_logger import save_forgery_metrics
 
@@ -63,6 +65,7 @@ async def analyze_image(
             "message": error
         }
 
+
     # --------------------------------------------------
     # 2. VALIDATE IMAGE
     # --------------------------------------------------
@@ -78,6 +81,7 @@ async def analyze_image(
             "success": False,
             "message": message
         }
+
 
     # --------------------------------------------------
     # 3. SAVE TEMPORARY IMAGE FOR AI MODEL
@@ -97,6 +101,7 @@ async def analyze_image(
             temp_file.write(image_bytes)
             temp_path = temp_file.name
 
+
         # --------------------------------------------------
         # 4. AI DETECTION - ImageGuardML
         # --------------------------------------------------
@@ -108,10 +113,10 @@ async def analyze_image(
     finally:
 
         if temp_path:
-
             Path(temp_path).unlink(
                 missing_ok=True
             )
+
 
     # --------------------------------------------------
     # 5. METADATA ANALYSIS
@@ -124,6 +129,7 @@ async def analyze_image(
     metadata_analysis = analyze_metadata(
         metadata
     )
+
 
     # --------------------------------------------------
     # 6. ELA ANALYSIS
@@ -145,6 +151,7 @@ async def analyze_image(
         "ela_output.jpg"
     )
 
+
     save_ela_metrics(
         filename=image.filename,
         category=category,
@@ -153,6 +160,7 @@ async def analyze_image(
         standard_deviation=ela_metrics["standardDeviation"]
     )
 
+
     # --------------------------------------------------
     # 7. FORGERY ANALYSIS
     # --------------------------------------------------
@@ -160,6 +168,7 @@ async def analyze_image(
     forgery_analysis = analyze_forgery(
         image_cv
     )
+
 
     save_forgery_metrics(
         filename=image.filename,
@@ -173,13 +182,37 @@ async def analyze_image(
         block_std=forgery_analysis["blockSharpnessStd"]
     )
 
+
     # --------------------------------------------------
-    # 8. FINAL RESPONSE
+    # 8. FUSION ANALYSIS
+    # --------------------------------------------------
+
+    fusion_analysis = predict_fusion(
+        ai_probability=ai_detection["ai_probability"],
+        forensic_analysis={
+            "meanDifference": ela_metrics["meanDifference"],
+            "maxDifference": ela_metrics["maxDifference"],
+            "standardDeviation": ela_metrics["standardDeviation"],
+            "edgeDensity": forgery_analysis["edgeDensity"],
+            "noiseMean": forgery_analysis["noiseMean"],
+            "noiseStd": forgery_analysis["noiseStd"],
+            "blurScore": forgery_analysis["blurScore"],
+            "sharpnessScore": forgery_analysis["sharpnessScore"],
+            "blockSharpnessAverage": forgery_analysis["blockSharpnessAverage"],
+            "blockSharpnessStd": forgery_analysis["blockSharpnessStd"]
+        }
+    )
+
+
+    # --------------------------------------------------
+    # 9. FINAL RESPONSE
     # --------------------------------------------------
 
     return {
         "success": True,
+
         "filename": image.filename,
+
         "contentType": image.content_type,
 
         **image_info,
@@ -187,9 +220,12 @@ async def analyze_image(
         "aiDetection": ai_detection,
 
         "metadata": metadata,
+
         "metadataAnalysis": metadata_analysis,
 
         "elaMetrics": ela_metrics,
 
-        "forgeryAnalysis": forgery_analysis
-    }
+        "forgeryAnalysis": forgery_analysis,
+
+        "fusionAnalysis": fusion_analysis
+    }   

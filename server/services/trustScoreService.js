@@ -13,13 +13,12 @@ export const calculateTrustScore = ({
     // --------------------------------------------------
 
     const aiProbability = clamp(
-        Number(aiDetection?.ai_probability || 0),
+        Number(aiDetection?.ai_probability ?? 0),
         0,
         1
     );
 
-    const aiScore =
-        (1 - aiProbability) * 60;
+    const aiScore = (1 - aiProbability) * 60;
 
 
     // --------------------------------------------------
@@ -27,9 +26,9 @@ export const calculateTrustScore = ({
     // --------------------------------------------------
 
     const integrityScore = clamp(
-        Number(
-            metadataAnalysis?.integrityScore || 0
-        )
+        Number(metadataAnalysis?.integrityScore ?? 0),
+        0,
+        100
     );
 
     const metadataScore =
@@ -39,26 +38,24 @@ export const calculateTrustScore = ({
     // --------------------------------------------------
     // 3. ELA — 10 POINTS
     // --------------------------------------------------
-    // ELA is currently treated as supporting evidence.
-    // We do not use an arbitrary fake-detection threshold.
+    // ELA is supporting forensic evidence.
+    // It is not used as an independent AI classifier.
 
     const elaScore = 10;
 
 
     // --------------------------------------------------
-    // 4. FORGERY — 15 POINTS
+    // 4. OPENCV FORENSICS — 15 POINTS
     // --------------------------------------------------
-    // Forgery features are supporting evidence.
-    // They are not strong enough to be an independent
-    // AI classifier according to our validation.
+    // OpenCV forensic features are currently treated
+    // as supporting evidence rather than a standalone
+    // authenticity classifier.
 
     const forgeryScore = 15;
 
 
-
-
     // --------------------------------------------------
-    // FINAL SCORE
+    // FINAL TRUST SCORE
     // --------------------------------------------------
 
     const trustScore = Math.round(
@@ -114,6 +111,10 @@ export const calculateTrustScore = ({
     }
 
 
+    // --------------------------------------------------
+    // RESULT
+    // --------------------------------------------------
+
     return {
 
         trustScore,
@@ -124,15 +125,17 @@ export const calculateTrustScore = ({
 
         scoreBreakdown: {
 
-            ai: Number(aiScore.toFixed(2)),
+            ai: Number(
+                aiScore.toFixed(2)
+            ),
 
-            metadata:
-                Number(metadataScore.toFixed(2)),
+            metadata: Number(
+                metadataScore.toFixed(2)
+            ),
 
             ela: elaScore,
 
-            forgery: forgeryScore,
-
+            forgery: forgeryScore
 
         }
 

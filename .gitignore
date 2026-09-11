@@ -27,6 +27,8 @@ python-engine/venv/
 python-engine/__pycache__/
 *.pyc
 python-engine/dataset/
+python-engine/external-test/
+python-engine/new-test/
 
 # ==========================
 # IDE

@@ -166,6 +166,9 @@ export const uploadImage = async (req, res) => {
                     forgeryAnalysis:
                         pythonAnalysis.forgeryAnalysis,
 
+                    fusionAnalysis:
+                        pythonAnalysis.fusionAnalysis,
+
                     qualityAssessment: {
 
                         resolution,
@@ -230,4 +233,86 @@ export const uploadImage = async (req, res) => {
 
     }
 
+};
+
+
+// --------------------------------------------------
+// GET USER ANALYSIS HISTORY
+// --------------------------------------------------
+
+export const getAnalysisHistory = async (req, res) => {
+    try {
+        const HISTORY_DAYS = 30;
+        const MAX_HISTORY_ITEMS = 20;
+
+        const cutoffDate = new Date();
+        cutoffDate.setDate(cutoffDate.getDate() - HISTORY_DAYS);
+
+        const analyses = await ImageAnalysis.find({
+            uploadedBy: req.user._id,
+            createdAt: { $gte: cutoffDate },
+        })
+            .sort({ createdAt: -1 })
+            .limit(MAX_HISTORY_ITEMS);
+
+        return res.status(200).json({
+            success: true,
+            count: analyses.length,
+            analyses,
+        });
+
+    } catch (error) {
+
+        console.log(
+            "History fetch error:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message:
+                error.message ||
+                "Failed to fetch analysis history",
+        });
+    }
+};
+
+
+// --------------------------------------------------
+// GET SINGLE ANALYSIS REPORT
+// --------------------------------------------------
+
+export const getAnalysisById = async (req, res) => {
+    try {
+        const analysis = await ImageAnalysis.findOne({
+            _id: req.params.id,
+            uploadedBy: req.user._id,
+        });
+
+        if (!analysis) {
+            return res.status(404).json({
+                success: false,
+                message: "Analysis not found",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            analysis,
+        });
+
+    } catch (error) {
+
+        console.log(
+            "Analysis fetch error:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message:
+                error.message ||
+                "Failed to fetch analysis",
+        });
+    }
 };

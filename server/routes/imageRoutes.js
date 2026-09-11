@@ -1,10 +1,14 @@
 import express from "express";
 import protect from "../middleware/authMiddleware.js";
 import upload from "../middleware/uploadMiddleware.js";
-import { sendImageToPython } from "../services/pythonService.js";
-import { uploadImage } from "../controllers/imageController.js";
+import {
+    uploadImage,
+    getAnalysisHistory,
+    getAnalysisById
+} from "../controllers/imageController.js";
 
 const router = express.Router();
+
 
 // Upload Image
 router.post(
@@ -14,4 +18,17 @@ router.post(
     uploadImage
 );
 
+// Analysis History
+router.get(
+    "/history",
+    protect,
+    getAnalysisHistory
+);
+
+// Single Analysis Report
+router.get(
+    "/:id",
+    protect,
+    getAnalysisById
+);
 export default router;

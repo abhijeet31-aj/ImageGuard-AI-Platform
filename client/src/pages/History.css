@@ -1,0 +1,162 @@
+.history-page {
+    min-height: 100vh;
+    color: #183b30;
+    background: #f8fcf9;
+}
+
+.history-header {
+    min-height: 76px;
+    padding: 0 clamp(22px, 6vw, 88px);
+    border-bottom: 1px solid #deebe3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+}
+
+.history-back-button {
+    border: 0;
+    color: #147153;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 750;
+}
+
+.history-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #104b3a;
+    font-size: 1.12rem;
+    font-weight: 850;
+}
+
+.history-brand span {
+    width: 37px;
+    height: 37px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    color: white;
+    background: #147355;
+    font-size: 0.76rem;
+}
+
+.history-content {
+    width: min(100% - 44px, 1120px);
+    margin: 0 auto;
+    padding: clamp(55px, 8vw, 88px) 0;
+}
+
+.history-eyebrow {
+    margin: 0 0 14px;
+    color: #168260;
+    font-size: 0.7rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+}
+
+.history-content h1 {
+    margin: 0;
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    letter-spacing: -0.06em;
+}
+
+.history-description {
+    margin: 18px 0 38px;
+    color: #69786f;
+}
+
+.history-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.history-card {
+    overflow: hidden;
+    border: 1px solid #dce8df;
+    border-radius: 18px;
+    background: white;
+}
+
+.history-image {
+    height: 200px;
+    display: grid;
+    place-items: center;
+    color: #72857a;
+    background: #eef6f1;
+}
+
+.history-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.history-card-content {
+    padding: 20px;
+}
+
+.history-date {
+    margin: 0;
+    color: #7b8b82;
+    font-size: 0.8rem;
+}
+
+.history-card h2 {
+    margin: 10px 0;
+    color: #1a4c3a;
+    font-size: 1.3rem;
+}
+
+.history-card-content>p:not(.history-date) {
+    color: #61776b;
+}
+
+.history-card-content strong {
+    color: #176d51;
+}
+
+.view-result-button {
+    width: 100%;
+    min-height: 43px;
+    margin-top: 10px;
+    border: 1px solid #bcdcca;
+    border-radius: 9px;
+    color: #116a4e;
+    background: #effaf2;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.empty-history,
+.history-state {
+    padding: 35px;
+    border: 1px solid #dce8df;
+    border-radius: 16px;
+    color: #687b71;
+    background: white;
+    text-align: center;
+}
+
+.empty-history h2 {
+    font-size: 1.3rem;
+}
+
+.error {
+    color: #aa3737;
+    background: #fff4f4;
+}
+
+@media (max-width: 850px) {
+    .history-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .history-grid {
+        grid-template-columns: 1fr;
+    }
+}
