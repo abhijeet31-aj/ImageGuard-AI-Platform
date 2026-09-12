@@ -12,10 +12,12 @@ from cv.ela import (
     create_ela_preview
 )
 from cv.forgery import analyze_forgery
+from cv.manipulation import analyze_manipulation
 
 from ai.detector import detect_ai_image
 
 from services.fusion import predict_fusion
+from services.final_fusion import combine_final_analysis
 
 from utils.csv_logger import save_ela_metrics
 from utils.forgery_csv_logger import save_forgery_metrics
@@ -184,6 +186,20 @@ async def analyze_image(
 
 
     # --------------------------------------------------
+    # 7b. MANIPULATION ANALYSIS (classical CV, Phase 1)
+    # --------------------------------------------------
+    # Separate from aiDetection/fusionAnalysis: this checks for
+    # traditional editing/tampering signs (splice, copy-move,
+    # regional inconsistency), which the AI-generation model does
+    # not look for.
+
+    manipulation_analysis = analyze_manipulation(
+        image_cv,
+        difference_image
+    )
+
+
+    # --------------------------------------------------
     # 8. FUSION ANALYSIS
     # --------------------------------------------------
 
@@ -201,6 +217,20 @@ async def analyze_image(
             "blockSharpnessAverage": forgery_analysis["blockSharpnessAverage"],
             "blockSharpnessStd": forgery_analysis["blockSharpnessStd"]
         }
+    )
+
+
+    # --------------------------------------------------
+    # 8b. FINAL ANALYSIS (Phase 2 — rule-based combination)
+    # --------------------------------------------------
+    # Combines fusionAnalysis (AI-generation) + manipulationAnalysis
+    # (Phase 1) into one final classification. See
+    # services/final_fusion.py docstring for why this is a documented
+    # rule, not a trained model, at this stage.
+
+    final_analysis = combine_final_analysis(
+        fusion_analysis,
+        manipulation_analysis
     )
 
 
@@ -227,5 +257,9 @@ async def analyze_image(
 
         "forgeryAnalysis": forgery_analysis,
 
-        "fusionAnalysis": fusion_analysis
-    }   
+        "manipulationAnalysis": manipulation_analysis,
+
+        "fusionAnalysis": fusion_analysis,
+
+        "finalAnalysis": final_analysis
+    }

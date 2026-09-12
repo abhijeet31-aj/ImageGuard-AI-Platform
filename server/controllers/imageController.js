@@ -121,11 +121,17 @@ export const uploadImage = async (req, res) => {
 
         const trustResult = calculateTrustScore({
 
-            aiDetection:
-                pythonAnalysis.aiDetection,
+            fusionAnalysis:
+                pythonAnalysis.fusionAnalysis,
+
+            manipulationAnalysis:
+                pythonAnalysis.manipulationAnalysis,
 
             metadataAnalysis:
                 pythonAnalysis.metadataAnalysis,
+
+            finalAnalysis:
+                pythonAnalysis.finalAnalysis,
 
         });
 
@@ -166,8 +172,14 @@ export const uploadImage = async (req, res) => {
                     forgeryAnalysis:
                         pythonAnalysis.forgeryAnalysis,
 
+                    manipulationAnalysis:
+                        pythonAnalysis.manipulationAnalysis,
+
                     fusionAnalysis:
                         pythonAnalysis.fusionAnalysis,
+
+                    finalAnalysis:
+                        pythonAnalysis.finalAnalysis,
 
                     qualityAssessment: {
 
