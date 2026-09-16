@@ -1,5 +1,6 @@
 from pathlib import Path
 import tempfile
+import json
 
 from fastapi import FastAPI, UploadFile, File, Form
 
@@ -14,10 +15,10 @@ from cv.ela import (
 from cv.forgery import analyze_forgery
 from cv.manipulation import analyze_manipulation
 
-from ai.detector import detect_ai_image
+from ai.detector import detect_ai_image, detect_ai_tiled
 
 from services.fusion import predict_fusion
-from services.final_fusion import combine_final_analysis
+from services.final_fusion import combine_final_analysis, refine_with_tile_analysis
 
 from utils.csv_logger import save_ela_metrics
 from utils.forgery_csv_logger import save_forgery_metrics
@@ -262,4 +263,75 @@ async def analyze_image(
         "fusionAnalysis": fusion_analysis,
 
         "finalAnalysis": final_analysis
+    }
+
+
+# --------------------------------------------------
+# DEEP SCAN — Phase 3 (on-demand patch/tile pipeline)
+# --------------------------------------------------
+# Separate, optional endpoint — NOT part of the default /analyze-image
+# flow, since tiling runs the AI model many times over one image and
+# is noticeably slower. The Node server calls this only when the user
+# explicitly clicks "Deep Scan" on an existing result.
+
+@app.post("/deep-scan")
+async def deep_scan(
+    image: UploadFile = File(...),
+    final_analysis: str = Form(None)
+):
+
+    image_bytes = await image.read()
+
+    suffix = Path(image.filename).suffix or ".jpg"
+
+    temp_path = None
+
+    try:
+
+        with tempfile.NamedTemporaryFile(
+            suffix=suffix,
+            delete=False
+        ) as temp_file:
+
+            temp_file.write(image_bytes)
+            temp_path = temp_file.name
+
+        tile_analysis = detect_ai_tiled(
+            temp_path
+        )
+
+    finally:
+
+        if temp_path:
+            Path(temp_path).unlink(
+                missing_ok=True
+            )
+
+
+    refined_final_analysis = None
+
+    if final_analysis:
+
+        try:
+
+            existing_final_analysis = json.loads(final_analysis)
+
+            refined_final_analysis = refine_with_tile_analysis(
+                existing_final_analysis,
+                tile_analysis
+            )
+
+        except (json.JSONDecodeError, TypeError):
+
+            refined_final_analysis = None
+
+
+    return {
+        "success": True,
+
+        "tileAnalysis": tile_analysis,
+
+        "suspiciousRegions": tile_analysis.get("suspiciousRegions", []),
+
+        "finalAnalysis": refined_final_analysis
     }

@@ -1,0 +1,17 @@
+class,support,precision,recall,f1
+Authentic,180,0.8214,0.8944,0.8564
+AI Generated,75,0.9315,0.9067,0.9189
+Manipulated,180,0.9031,0.9833,0.9415
+Partially AI-Edited,180,0.8333,0.6944,0.7576
+
+overall_accuracy,0.8634
+macro_precision,0.8723
+macro_recall,0.8697
+macro_f1,0.8686
+
+"confusion_matrix (rows=true, cols=predicted)"
+,Authentic,AI Generated,Manipulated,Partially AI-Edited
+Authentic,161,0,0,19
+AI Generated,3,68,1,3
+Manipulated,0,0,177,3
+Partially AI-Edited,32,5,18,125

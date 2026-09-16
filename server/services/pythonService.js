@@ -50,3 +50,37 @@ export const sendImageToPython = async (imagePath, category) => {
     return response.data;
 
 };
+
+
+export const sendImageForDeepScan = async (imagePath, finalAnalysis) => {
+
+    const formData = new FormData();
+
+    formData.append(
+        "image",
+        fs.createReadStream(imagePath)
+    );
+
+    if (finalAnalysis) {
+
+        formData.append(
+            "final_analysis",
+            JSON.stringify(finalAnalysis)
+        );
+    }
+
+    const response = await axios.post(
+
+        `${PYTHON_API}/deep-scan`,
+
+        formData,
+
+        {
+            headers: formData.getHeaders(),
+        }
+
+    );
+
+    return response.data;
+
+};

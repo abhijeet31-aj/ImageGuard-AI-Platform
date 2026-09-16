@@ -11,7 +11,7 @@ import {
     analyzeBrightness,
 } from "../services/qualityService.js";
 
-import { sendImageToPython } from "../services/pythonService.js";
+import { sendImageToPython, sendImageForDeepScan } from "../services/pythonService.js";
 
 import {
     calculateTrustScore
@@ -325,6 +325,97 @@ export const getAnalysisById = async (req, res) => {
             message:
                 error.message ||
                 "Failed to fetch analysis",
+        });
+    }
+};
+
+
+// --------------------------------------------------
+// DEEP SCAN — Phase 3 (on-demand patch/tile pipeline)
+// --------------------------------------------------
+// Triggered only when the user explicitly clicks "Deep Scan" on an
+// existing result — never runs automatically during upload, since
+// tiling is noticeably slower than the default analysis.
+
+export const deepScanImage = async (req, res) => {
+    try {
+        const analysis = await ImageAnalysis.findOne({
+            _id: req.params.id,
+            uploadedBy: req.user._id,
+        });
+
+        if (!analysis) {
+            return res.status(404).json({
+                success: false,
+                message: "Analysis not found",
+            });
+        }
+
+        const imagePath = path.join(
+            "uploads",
+            analysis.image
+        );
+
+        const deepScanResult = await sendImageForDeepScan(
+            imagePath,
+            analysis.report?.finalAnalysis || null
+        );
+
+        // --------------------------------------------------
+        // Update the stored report with the refined findings
+        // --------------------------------------------------
+
+        if (deepScanResult.finalAnalysis) {
+            analysis.report.finalAnalysis = deepScanResult.finalAnalysis;
+        }
+
+        analysis.report.suspiciousRegions =
+            deepScanResult.suspiciousRegions || [];
+
+        analysis.report.tileAnalysis =
+            deepScanResult.tileAnalysis || null;
+
+
+        // --------------------------------------------------
+        // Recompute trust score using the refined finalAnalysis,
+        // keeping the same underlying fusion/manipulation signals.
+        // --------------------------------------------------
+
+        const trustResult = calculateTrustScore({
+            fusionAnalysis: analysis.report.fusionAnalysis,
+            manipulationAnalysis: analysis.report.manipulationAnalysis,
+            metadataAnalysis: analysis.report.metadataAnalysis,
+            finalAnalysis: analysis.report.finalAnalysis,
+        });
+
+        analysis.trustScore = trustResult.trustScore;
+        analysis.report.trustScore = trustResult.trustScore;
+        analysis.report.riskLevel = trustResult.riskLevel;
+        analysis.report.scoreBreakdown = trustResult.scoreBreakdown;
+        analysis.report.recommendation = trustResult.recommendation;
+
+        analysis.markModified("report");
+
+        await analysis.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Deep scan completed",
+            analysis,
+        });
+
+    } catch (error) {
+
+        console.log(
+            "Deep scan error:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message:
+                error.message ||
+                "Deep scan failed",
         });
     }
 };

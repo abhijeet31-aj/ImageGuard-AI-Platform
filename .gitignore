@@ -29,6 +29,7 @@ python-engine/__pycache__/
 python-engine/dataset/
 python-engine/external-test/
 python-engine/new-test/
+python-engine/datasets/
 
 # ==========================
 # IDE

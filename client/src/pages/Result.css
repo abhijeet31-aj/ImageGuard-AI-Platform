@@ -243,6 +243,52 @@
     font-size: 1.15rem;
 }
 
+.ig-deep-scan-panel {
+    margin-bottom: 16px;
+}
+
+.ig-deep-scan-button {
+    width: 100%;
+    min-height: 52px;
+    border: 1px solid #a9e9c6;
+    border-radius: 12px;
+    color: #0c6045;
+    background: #eafff0;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.ig-deep-scan-button:hover:not(:disabled) {
+    background: #d9ffe6;
+}
+
+.ig-deep-scan-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.ig-deep-scan-error {
+    margin: 10px 0 0;
+    color: #b23838;
+    font-size: 0.85rem;
+}
+
+.ig-deep-scan-results {
+    margin-top: 14px;
+    border: 1px solid #d8e7de;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.ig-deep-scan-warning {
+    margin: 0;
+    padding: 16px 20px;
+    color: #8a5a00;
+    background: #fff8e6;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
 @media (max-width: 760px) {
     .ig-analysis-shell {
         grid-template-columns: 1fr;

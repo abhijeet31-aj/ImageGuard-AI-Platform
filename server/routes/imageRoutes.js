@@ -4,7 +4,8 @@ import upload from "../middleware/uploadMiddleware.js";
 import {
     uploadImage,
     getAnalysisHistory,
-    getAnalysisById
+    getAnalysisById,
+    deepScanImage
 } from "../controllers/imageController.js";
 
 const router = express.Router();
@@ -31,4 +32,12 @@ router.get(
     protect,
     getAnalysisById
 );
+
+// Deep Scan (Phase 3 — on-demand patch/tile pipeline)
+router.post(
+    "/:id/deep-scan",
+    protect,
+    deepScanImage
+);
+
 export default router;

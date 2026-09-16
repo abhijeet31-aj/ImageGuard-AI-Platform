@@ -1,3 +1,5 @@
+import { useState } from "react";
+import api from "../services/api";
 import "./Result.css";
 
 function toPercent(value, decimals = 0) {
@@ -18,7 +20,42 @@ function confidenceLevel(confidence) {
 }
 
 function Result({ analysis, imagePreview, onBack, onAnalyzeAgain }) {
-    const report = analysis?.report || {};
+    const [deepScanLoading, setDeepScanLoading] = useState(false);
+    const [deepScanError, setDeepScanError] = useState(null);
+    const [deepScanReport, setDeepScanReport] = useState(null);
+
+    const report = deepScanReport || analysis?.report || {};
+
+    const handleDeepScan = async () => {
+        if (!analysis?._id) return;
+
+        setDeepScanLoading(true);
+        setDeepScanError(null);
+
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await api.post(
+                `/images/${analysis._id}/deep-scan`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            setDeepScanReport(response.data.analysis.report);
+
+        } catch (error) {
+            setDeepScanError(
+                error?.response?.data?.message ||
+                "Deep scan failed. Please try again."
+            );
+        } finally {
+            setDeepScanLoading(false);
+        }
+    };
 
     // Only combined AI + forensic fusion result is used.
     const fusionAnalysis = report.fusionAnalysis || {};
@@ -117,6 +154,53 @@ function Result({ analysis, imagePreview, onBack, onAnalyzeAgain }) {
                                 <span>Recommendation</span>
                                 <strong>{recommendation}</strong>
                             </div>
+                        </div>
+
+                        <div className="ig-deep-scan-panel">
+                            <button
+                                className="ig-deep-scan-button"
+                                onClick={handleDeepScan}
+                                disabled={deepScanLoading}
+                            >
+                                {deepScanLoading
+                                    ? "Scanning regions…"
+                                    : "Run Deep Scan (check for partial AI edits)"}
+                            </button>
+
+                            {deepScanError && (
+                                <p className="ig-deep-scan-error">{deepScanError}</p>
+                            )}
+
+                            {report.tileAnalysis && (
+                                <div className="ig-deep-scan-results">
+                                    <div className="ig-detail-row">
+                                        <span>Deep Scan Result</span>
+                                        <strong>{report.tileAnalysis.tileVerdict}</strong>
+                                    </div>
+
+                                    <div className="ig-detail-row">
+                                        <span>Regions Checked</span>
+                                        <strong>{report.tileAnalysis.tileCount}</strong>
+                                    </div>
+
+                                    {report.suspiciousRegions?.length > 0 && (
+                                        <div className="ig-detail-row">
+                                            <span>Suspicious Regions Found</span>
+                                            <strong>{report.suspiciousRegions.length}</strong>
+                                        </div>
+                                    )}
+
+                                    {report.finalAnalysis?.prediction ===
+                                        "Partially AI-Edited" && (
+                                            <p className="ig-deep-scan-warning">
+                                                Some regions of this image score very
+                                                differently from the rest — consistent
+                                                with a localized AI edit. Treat this
+                                                image as only partially verified.
+                                            </p>
+                                        )}
+                                </div>
+                            )}
                         </div>
 
                         <button className="ig-analyze-button" onClick={onAnalyzeAgain}>
