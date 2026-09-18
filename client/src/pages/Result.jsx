@@ -57,22 +57,49 @@ function Result({ analysis, imagePreview, onBack, onAnalyzeAgain }) {
         }
     };
 
-    // Only combined AI + forensic fusion result is used.
+    // finalAnalysis (Phase 2-4) is the real multi-class verdict —
+    // Authentic / AI Generated / Manipulated / Partially AI-Edited /
+    // Needs Review. fusionAnalysis is kept only as a fallback for old
+    // records saved before finalAnalysis existed.
+    const finalAnalysis = report.finalAnalysis || {};
     const fusionAnalysis = report.fusionAnalysis || {};
 
-    const aiLikelihood = toPercent(fusionAnalysis.fusion_probability, 1);
-    const confidence = toPercent(fusionAnalysis.confidence, 1);
-    const classification = fusionAnalysis.prediction || "Not available";
+    const classification =
+        finalAnalysis.prediction ||
+        fusionAnalysis.prediction ||
+        "Not available";
 
-    const isAiGenerated = /ai|fake|generated|synthetic/i.test(classification);
+    const aiLikelihood = toPercent(
+        finalAnalysis.aiLikelihood ?? fusionAnalysis.fusion_probability,
+        1
+    );
 
-    const verdictText = isAiGenerated
-        ? "This image is likely created by AI"
-        : "This image appears likely authentic";
+    const confidence = toPercent(
+        finalAnalysis.confidence ?? fusionAnalysis.confidence,
+        1
+    );
+
+    const manipulationLikelihood = toPercent(
+        finalAnalysis.manipulationLikelihood,
+        1
+    );
+
+    const VERDICT_STYLES = {
+        "Authentic": { tone: "ig-authentic", badge: "AUTHENTIC", text: "This image appears likely authentic" },
+        "AI Generated": { tone: "ig-ai-warning", badge: "AI GENERATED", text: "This image contains likely AI-generated content" },
+        "Manipulated": { tone: "ig-ai-warning", badge: "MANIPULATED", text: "Possible image manipulation detected" },
+        "Partially AI-Edited": { tone: "ig-ai-warning", badge: "AI EDITED", text: "This image may contain a localized AI edit" },
+        "Needs Review": { tone: "ig-needs-review", badge: "NEEDS REVIEW", text: "Signals were inconclusive for this image" },
+    };
+
+    const verdictStyle =
+        VERDICT_STYLES[classification] ||
+        { tone: "ig-needs-review", badge: "NEEDS REVIEW", text: "Signals were inconclusive for this image" };
 
     const recommendation =
         report.recommendation ||
-        "Review this image before using it as verified evidence.";
+        finalAnalysis.recommendation ||
+        "Needs Review";
 
     return (
         <main className="ig-result-page">
@@ -109,20 +136,17 @@ function Result({ analysis, imagePreview, onBack, onAnalyzeAgain }) {
                     </section>
 
                     <section className="ig-verdict-panel">
-                        <div
-                            className={`ig-verdict ${isAiGenerated ? "ig-ai-warning" : "ig-authentic"
-                                }`}
-                        >
+                        <div className={`ig-verdict ${verdictStyle.tone}`}>
                             <div>
                                 <span>IMAGEGUARD VERDICT</span>
-                                <h2>{verdictText}</h2>
+                                <h2>{verdictStyle.text}</h2>
                             </div>
 
                             <div className="ig-percentage">
                                 <strong>
                                     {confidence === null ? "—" : `${confidence}%`}
                                 </strong>
-                                <small>{isAiGenerated ? "AI" : "AUTHENTIC"}</small>
+                                <small>{verdictStyle.badge}</small>
                             </div>
                         </div>
 
@@ -133,6 +157,15 @@ function Result({ analysis, imagePreview, onBack, onAnalyzeAgain }) {
                                     {aiLikelihood === null
                                         ? "Not available"
                                         : `${aiLikelihood}%`}
+                                </strong>
+                            </div>
+
+                            <div className="ig-detail-row">
+                                <span>Manipulation Likelihood</span>
+                                <strong>
+                                    {manipulationLikelihood === null
+                                        ? "Not available"
+                                        : `${manipulationLikelihood}%`}
                                 </strong>
                             </div>
 

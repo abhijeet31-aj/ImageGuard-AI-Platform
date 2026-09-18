@@ -7,13 +7,18 @@
 }
 
 .ig-result-header {
-    min-height: 76px;
+    min-height: 70px;
     padding: 0 clamp(22px, 6vw, 88px);
     border-bottom: 1px solid #deebe3;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgb(255, 255, 255);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 .ig-back-button {
@@ -166,6 +171,12 @@
     color: #b23838;
     border: 1px solid #ffc0c0;
     background: #fff2f2;
+}
+
+.ig-needs-review {
+    color: #8a5a00;
+    border: 1px solid #ffe1a3;
+    background: #fff8e6;
 }
 
 .ig-percentage {

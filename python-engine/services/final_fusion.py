@@ -76,6 +76,11 @@ _FORENSIC_FEATURE_NAMES = [
 _NEEDS_REVIEW_MIN_CONFIDENCE = 0.40
 _NEEDS_REVIEW_MARGIN = 0.15
 
+# "Partially AI-Edited" needs a much higher bar than the other three
+# classes before being trusted (see the comment where this is used) —
+# it is the model's documented weakest, most-often-wrong class.
+_PARTIALLY_EDITED_MIN_CONFIDENCE = 0.70
+
 _RECOMMENDATIONS = {
     "Authentic":
         "No Edits Detected",
@@ -213,9 +218,22 @@ def _combine_with_trained_model(fusion_analysis, manipulation_analysis):
         f"({second_probability * 100:.1f}%)."
     ]
 
+    # "Partially AI-Edited" is the documented weakest class (see
+    # phase4_evaluation_report.csv — lowest F1, and the confusion
+    # matrix shows it is the class most often wrongly predicted for
+    # genuinely Authentic images that simply have mild, non-zero
+    # readings on both underlying detectors). So it gets a stricter
+    # confidence bar than the other three classes before being
+    # trusted outright.
+    partially_edited_unreliable = (
+        top_class == "Partially AI-Edited"
+        and top_probability < _PARTIALLY_EDITED_MIN_CONFIDENCE
+    )
+
     if (
         top_probability < _NEEDS_REVIEW_MIN_CONFIDENCE
         or (top_probability - second_probability) < _NEEDS_REVIEW_MARGIN
+        or partially_edited_unreliable
     ):
 
         prediction = "Needs Review"
@@ -481,11 +499,7 @@ def refine_with_tile_analysis(final_analysis, tile_analysis):
             f"authentic image."
         )
 
-        refined["recommendation"] = (
-            "Localized AI-generated content detected in specific "
-            "regions of this image. Review the highlighted areas "
-            "before using this image as verified evidence."
-        )
+        refined["recommendation"] = "AI Edited"
 
     else:
 

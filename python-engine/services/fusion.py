@@ -216,4 +216,10 @@ def predict_fusion(
             4,
         ),
         "threshold": THRESHOLD,
+
+        # REQUIRED by services/final_fusion.py's trained-model path —
+        # without this, all 10 forensic features silently default to
+        # 0.0 for every live prediction, corrupting the feature vector
+        # fed to the trained model (this was a real, severe bug).
+        "forensicFeatures": forensic_analysis,
     }
