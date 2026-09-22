@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import numpy as np
 import torch
 from PIL import Image
 from torchvision import transforms
@@ -268,4 +269,73 @@ def detect_ai_tiled(image_path, grid_target=4, overlap=0.5):
         "stdScore": round(std_score, 4),
         "tileVerdict": tile_verdict,
         "suspiciousRegions": suspicious_regions,
+    }
+
+
+# --------------------------------------------------
+# COARSE REGIONAL CHECK — Phase 4 root-cause fix
+# --------------------------------------------------
+# Runs as part of the STANDARD analysis (not optional, unlike
+# detect_ai_tiled/Deep Scan above), because it exists to fix a
+# structural problem rather than to localize an already-suspected
+# edit: whole-image features (ai_probability, forensic averages)
+# mathematically DILUTE a small localized AI edit — if only 10% of
+# the image is edited, the whole-image average barely moves. No
+# amount of better training data fixes this on its own, because the
+# information genuinely isn't in the whole-image features to begin
+# with. This function gives the trained meta-fusion model a cheap,
+# always-available regional-heterogeneity number instead.
+#
+# Deliberately coarse (3x3 = 9 regions by default, non-overlapping)
+# to keep this affordable for EVERY upload — Deep Scan's 50-100
+# overlapping tiles remain the optional, expensive, precise version
+# for when someone explicitly wants localization.
+#
+# grid=3 (not 2) based on empirical testing: a small localized edit
+# (e.g. ~12% of the image) produced a HIGHER, more detectable
+# regionalStd at grid=3 than at grid=2 — a 2x2 split is coarse enough
+# that a small edit sitting across a cell boundary gets diluted into
+# an already-large cell, similar to the original whole-image dilution
+# problem this feature exists to fix, just one level less severe.
+#
+# TRADE-OFF: this adds grid*grid extra model inferences to every
+# single upload, not just Deep Scan. With grid=3 (9 regions), that's
+# 9 extra ViT calls per image on top of the existing 1 — meaningfully
+# slower per-upload, in exchange for the trained model actually being
+# able to learn from spatial heterogeneity. Increase `grid` only if
+# your hardware can afford it; each +1 roughly doubles the extra cost.
+
+def detect_ai_coarse_regions(image_path, grid=3):
+
+    image = Image.open(
+        image_path
+    ).convert("RGB")
+
+    width, height = image.size
+
+    region_width = max(1, width // grid)
+    region_height = max(1, height // grid)
+
+    scores = []
+
+    for row in range(grid):
+
+        for col in range(grid):
+
+            left = col * region_width
+            top = row * region_height
+
+            right = width if col == grid - 1 else left + region_width
+            bottom = height if row == grid - 1 else top + region_height
+
+            crop = image.crop((left, top, right, bottom))
+
+            scores.append(_score_pil_image(crop))
+
+    regional_std = float(np.std(scores)) if scores else 0.0
+
+    return {
+        "regionCount": len(scores),
+        "regionScores": [round(s, 4) for s in scores],
+        "regionalStd": round(regional_std, 4),
     }

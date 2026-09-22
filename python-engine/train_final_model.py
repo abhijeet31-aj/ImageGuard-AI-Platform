@@ -26,6 +26,7 @@ import numpy as np
 from phase4_common import (
     load_feature_rows,
     split_dataset,
+    k_fold_group_split,
     print_split_summary,
     rows_to_matrix,
     FEATURE_COLUMNS,
@@ -39,10 +40,15 @@ from phase4_common import (
 # SETTINGS
 # ============================================================
 
-L2 = 0.01
+# L2 is no longer a hand-picked guess — it's selected by cross-
+# validation below (see cross_validate_l2()). These are the
+# candidates it chooses from.
+L2_CANDIDATES = [0.001, 0.01, 0.05, 0.1, 0.3, 1.0]
+
 LEARNING_RATE = 0.05
 ITERATIONS = 6000
 SEED = 42
+CV_FOLDS = 5
 
 
 # ============================================================
@@ -105,6 +111,114 @@ def accuracy(predictions, labels):
     return float(np.mean(predictions == labels))
 
 
+def macro_f1_score(predictions, labels, num_classes):
+    """
+    Macro-averaged F1 — used as the cross-validation selection metric
+    instead of plain accuracy, since accuracy alone can look fine
+    while quietly ignoring a weak minority class (exactly the
+    "Partially AI-Edited" problem this whole exercise is about).
+    """
+
+    f1_scores = []
+
+    for class_index in range(num_classes):
+
+        true_positive = int(np.sum((predictions == class_index) & (labels == class_index)))
+        false_positive = int(np.sum((predictions == class_index) & (labels != class_index)))
+        false_negative = int(np.sum((predictions != class_index) & (labels == class_index)))
+
+        precision = (
+            true_positive / (true_positive + false_positive)
+            if (true_positive + false_positive) > 0 else 0.0
+        )
+
+        recall = (
+            true_positive / (true_positive + false_negative)
+            if (true_positive + false_negative) > 0 else 0.0
+        )
+
+        f1 = (
+            2 * precision * recall / (precision + recall)
+            if (precision + recall) > 0 else 0.0
+        )
+
+        f1_scores.append(f1)
+
+    return float(np.mean(f1_scores))
+
+
+def cross_validate_l2(train_rows, candidates, k, num_classes, iterations, learning_rate, seed):
+    """
+    Proper k-fold, group-aware cross-validation to select L2 — instead
+    of guessing a regularization strength, this actually measures
+    which one generalizes best on held-out folds of the TRAINING data
+    (the val/test sets stay completely untouched by this process).
+    """
+
+    folds = k_fold_group_split(train_rows, k=k, seed=seed)
+
+    print(f"\nCross-validating L2 over {len(candidates)} candidate(s), "
+          f"{k} folds each (val/test sets are NOT used for this):")
+
+    best_l2 = candidates[0]
+    best_score = -1.0
+
+    for l2_candidate in candidates:
+
+        fold_scores = []
+
+        for fold_index in range(k):
+
+            fold_val_rows = folds[fold_index]
+
+            fold_train_rows = [
+                row
+                for other_index in range(k)
+                if other_index != fold_index
+                for row in folds[other_index]
+            ]
+
+            if not fold_val_rows or not fold_train_rows:
+                continue
+
+            X_fold_train, y_fold_train = rows_to_matrix(fold_train_rows)
+            X_fold_val, y_fold_val = rows_to_matrix(fold_val_rows)
+
+            fold_mean = X_fold_train.mean(axis=0)
+            fold_std = X_fold_train.std(axis=0)
+            fold_std[fold_std == 0] = 1.0
+
+            X_fold_train_norm = (X_fold_train - fold_mean) / fold_std
+            X_fold_val_norm = (X_fold_val - fold_mean) / fold_std
+
+            fold_weights, fold_bias = fit_softmax_regression(
+                X_fold_train_norm,
+                y_fold_train,
+                num_classes=num_classes,
+                regularization=l2_candidate,
+                iterations=iterations,
+                learning_rate=learning_rate,
+            )
+
+            fold_preds, _ = predict(X_fold_val_norm, fold_weights, fold_bias)
+
+            fold_scores.append(
+                macro_f1_score(fold_preds, y_fold_val, num_classes)
+            )
+
+        mean_score = float(np.mean(fold_scores)) if fold_scores else 0.0
+
+        print(f"  L2={l2_candidate:<8} avg macro-F1 across folds = {mean_score:.4f}")
+
+        if mean_score > best_score:
+            best_score = mean_score
+            best_l2 = l2_candidate
+
+    print(f"\nSelected L2={best_l2} (best cross-validated macro-F1: {best_score:.4f})")
+
+    return best_l2
+
+
 # ============================================================
 # MAIN
 # ============================================================
@@ -137,6 +251,22 @@ def main():
     X_test, y_test = rows_to_matrix(test_rows)
 
     # --------------------------------------------------------
+    # Cross-validate L2 using ONLY the training rows (val/test stay
+    # untouched — this is a proper, data-driven replacement for what
+    # used to be a hand-picked L2=0.01 guess).
+    # --------------------------------------------------------
+
+    L2 = cross_validate_l2(
+        train_rows,
+        candidates=L2_CANDIDATES,
+        k=CV_FOLDS,
+        num_classes=len(CLASS_NAMES),
+        iterations=ITERATIONS,
+        learning_rate=LEARNING_RATE,
+        seed=SEED,
+    )
+
+    # --------------------------------------------------------
     # Standardize using TRAIN statistics only (never fit on val/test —
     # that would leak information about their distribution into
     # training).
@@ -163,7 +293,7 @@ def main():
     )
 
     train_preds, _ = predict(X_train_norm, weights, bias)
-    val_preds, _ = predict(X_val_norm, weights, bias)
+    val_preds, val_probabilities = predict(X_val_norm, weights, bias)
     test_preds, _ = predict(X_test_norm, weights, bias)
 
     print(f"\nTrain accuracy: {accuracy(train_preds, y_train):.2%}")
@@ -173,6 +303,129 @@ def main():
         "\n(Train accuracy is NOT the model's real-world accuracy — "
         "run evaluate_final_model.py for the honest per-class "
         "precision/recall/F1/confusion matrix on the held-out test set.)"
+    )
+
+    # --------------------------------------------------------
+    # Needs-Review confidence/margin thresholds — CALIBRATED, not
+    # guessed
+    # --------------------------------------------------------
+    # These used to be fixed constants (0.40 confidence, 0.15 margin)
+    # picked by hand in final_fusion.py, with no measurement of how
+    # often they'd actually trigger. On real data they ended up
+    # flagging a large fraction of ALL predictions as "Needs Review"
+    # — not because those images were genuinely ambiguous, but
+    # because this model's probability spread is naturally less
+    # peaked than the guessed thresholds assumed.
+    #
+    # Instead, derive them from the VALIDATION set's own behaviour:
+    # look at the top-1 probability and margin for predictions that
+    # were actually CORRECT, and set the thresholds at a low
+    # percentile of that — i.e. "how low does confidence/margin get
+    # even when the model is right?". Only predictions below even
+    # that get flagged, instead of flagging anything below an
+    # arbitrary fixed number.
+
+    val_top2 = -np.sort(-val_probabilities, axis=1)[:, :2]
+
+    val_top1_probability = val_top2[:, 0]
+    val_margin = val_top2[:, 0] - val_top2[:, 1]
+
+    val_correct_mask = (val_preds == y_val)
+
+    CONFIDENCE_PERCENTILE = 10
+    MARGIN_PERCENTILE = 10
+
+    if val_correct_mask.sum() >= 10:
+
+        needs_review_min_confidence = float(
+            np.percentile(val_top1_probability[val_correct_mask], CONFIDENCE_PERCENTILE)
+        )
+
+        needs_review_margin = float(
+            np.percentile(val_margin[val_correct_mask], MARGIN_PERCENTILE)
+        )
+
+    else:
+
+        # Not enough correct validation samples to calibrate reliably
+        # — fall back to the old fixed defaults rather than computing
+        # a meaningless percentile from a handful of points.
+        needs_review_min_confidence = 0.40
+        needs_review_margin = 0.15
+
+        print(
+            "\nWARNING: too few correct validation predictions to "
+            "calibrate Needs-Review thresholds — using fallback "
+            "defaults (0.40 / 0.15)."
+        )
+
+    would_be_flagged = (
+        (val_top1_probability < needs_review_min_confidence)
+        | (val_margin < needs_review_margin)
+    )
+
+    print(f"\nNeeds-Review thresholds (calibrated from validation data):")
+    print(f"  Min confidence : {needs_review_min_confidence:.3f} "
+          f"(was a fixed 0.40 guess before)")
+    print(f"  Min margin     : {needs_review_margin:.3f} "
+          f"(was a fixed 0.15 guess before)")
+    print(f"  -> would flag {would_be_flagged.sum()}/{len(val_preds)} "
+          f"({would_be_flagged.mean():.1%}) of validation predictions "
+          f"as Needs Review")
+
+    # --------------------------------------------------------
+    # Cross-check thresholds — ALSO calibrated, not a fixed 0.35
+    # --------------------------------------------------------
+    # For validation images the model got RIGHT (predicted == true
+    # class == "Manipulated" or "AI Generated"), look at how low their
+    # own raw signal (manipulationProbability / ai_probability) can
+    # legitimately go — this is exactly what the trained model may be
+    # correctly picking up on using OTHER features when the raw
+    # signal itself is unremarkable. Set the cross-check threshold
+    # below even that, so it only fires on a genuine conflict, not on
+    # every correct prediction that happens to rely on non-obvious
+    # signals.
+
+    CROSS_CHECK_PERCENTILE = 5
+
+    def calibrate_cross_check_threshold(class_name, class_index, raw_value_key):
+
+        correct_class_mask = val_correct_mask & (val_preds == class_index)
+
+        if correct_class_mask.sum() < 10:
+
+            print(
+                f"\nWARNING: too few correct validation '{class_name}' "
+                f"predictions to calibrate its cross-check threshold — "
+                f"using fallback default (0.35)."
+            )
+            return 0.35
+
+        raw_values = np.array([
+            float(row[raw_value_key])
+            for row, is_this_class in zip(val_rows, correct_class_mask)
+            if is_this_class
+        ])
+
+        threshold = float(np.percentile(raw_values, CROSS_CHECK_PERCENTILE))
+
+        print(f"  {class_name} cross-check threshold: {threshold:.3f} "
+              f"(was a fixed 0.35 guess before)")
+
+        return threshold
+
+    print(f"\nCross-check thresholds (calibrated from validation data):")
+
+    manipulated_cross_check_threshold = calibrate_cross_check_threshold(
+        "Manipulated",
+        CLASS_NAMES.index("Manipulated"),
+        "manipulationProbability",
+    )
+
+    ai_generated_cross_check_threshold = calibrate_cross_check_threshold(
+        "AI Generated",
+        CLASS_NAMES.index("AI Generated"),
+        "ai_probability",
     )
 
     # --------------------------------------------------------
@@ -230,6 +483,12 @@ def main():
         "bias": bias.tolist(),
 
         "ood_threshold": ood_threshold,
+
+        "needs_review_min_confidence": needs_review_min_confidence,
+        "needs_review_margin": needs_review_margin,
+
+        "manipulated_cross_check_threshold": manipulated_cross_check_threshold,
+        "ai_generated_cross_check_threshold": ai_generated_cross_check_threshold,
 
         "training_sample_count": len(train_rows),
         "validation_sample_count": len(val_rows),

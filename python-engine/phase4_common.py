@@ -95,10 +95,10 @@ CLASS_TO_INDEX = {
 # there's nothing special about these specific values.
 
 MAX_IMAGES_PER_CLASS = {
-    "Authentic": 1200,
-    "AI Generated": None,          # keep all — already the smallest class
-    "Manipulated": 1200,
-    "Partially AI-Edited": 1200,
+    "Authentic": 1500,
+    "AI Generated": 1500,
+    "Manipulated": 1500,
+    "Partially AI-Edited": 1500,
 }
 
 SAMPLING_SEED = 42
@@ -128,6 +128,7 @@ FORENSIC_FEATURES = [
 FEATURE_COLUMNS = [
     "ai_log_odds",
     "manipulation_log_odds",
+    "ai_regional_std",
     *FORENSIC_FEATURES,
 ]
 
@@ -137,6 +138,7 @@ CSV_COLUMNS = [
     "group_id",
     "ai_probability",
     "manipulationProbability",
+    "aiRegionalStd",
     *FORENSIC_FEATURES,
 ]
 
@@ -213,6 +215,7 @@ def rows_to_matrix(rows):
         feature_vector = [
             ai_log_odds,
             manipulation_log_odds,
+            float(row["aiRegionalStd"]),
             *[
                 float(row[feature])
                 for feature in FORENSIC_FEATURES
@@ -295,7 +298,57 @@ def split_dataset(rows, train_frac=0.70, val_frac=0.15, seed=42):
     return train_rows, val_rows, test_rows
 
 
+def k_fold_group_split(rows, k=5, seed=42):
+    """
+    Split rows into k folds for cross-validation — group-aware and
+    class-stratified, same principles as split_dataset() above, just
+    producing k roughly-equal folds instead of a 3-way train/val/test
+    split. Used to properly tune hyperparameters (e.g. L2) via
+    cross-validation instead of picking a value by hand.
+
+    Returns a list of k lists of rows. Caller is responsible for
+    combining k-1 folds as training data and holding out the k-th as
+    validation, once per fold.
+    """
+
+    rng = np.random.default_rng(seed)
+
+    groups_lookup = load_groups_lookup()
+
+    for row in rows:
+        row["group_id"] = groups_lookup.get(
+            row["filename"],
+            row["filename"],
+        )
+
+    fold_assignment = {}  # group_id -> fold index
+
+    for class_label in CLASS_NAMES:
+
+        class_rows = [
+            row for row in rows
+            if row["class_label"] == class_label
+        ]
+
+        class_groups = sorted({
+            row["group_id"] for row in class_rows
+        })
+
+        rng.shuffle(class_groups)
+
+        for index, group_id in enumerate(class_groups):
+            fold_assignment.setdefault(group_id, index % k)
+
+    folds = [[] for _ in range(k)]
+
+    for row in rows:
+        folds[fold_assignment[row["group_id"]]].append(row)
+
+    return folds
+
+
 def print_split_summary(name, rows):
+
     print(f"\n{name} — {len(rows)} images")
 
     for class_label in CLASS_NAMES:

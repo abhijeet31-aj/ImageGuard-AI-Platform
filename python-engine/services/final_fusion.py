@@ -68,18 +68,60 @@ _FORENSIC_FEATURE_NAMES = [
     "blockSharpnessStd",
 ]
 
+# Must match phase4_common.FEATURE_COLUMNS order exactly:
+# [ai_log_odds, manipulation_log_odds, ai_regional_std, *forensic]
+
 # Even with a trained model, don't force a confident guess when the
 # top-2 classes are close, or the top class itself isn't confident —
-# same honest philosophy as the Phase 2 rule-based logic, just driven
-# by the trained model's own (real, evaluated) probabilities instead
-# of hand-picked thresholds.
-_NEEDS_REVIEW_MIN_CONFIDENCE = 0.40
-_NEEDS_REVIEW_MARGIN = 0.15
+# same honest philosophy as the Phase 2 rule-based logic. These are
+# now CALIBRATED per-model (by train_final_model.py, from validation
+# data) rather than fixed guesses — a fixed 0.40/0.15 guess turned out
+# to flag a large fraction of ALL predictions as "Needs Review" on
+# real data, since this model's probability spread doesn't naturally
+# peak that sharply. Falls back to the old fixed values only for a
+# model file saved before this calibration existed.
+if _TRAINED_MODEL is not None:
+
+    _NEEDS_REVIEW_MIN_CONFIDENCE = _TRAINED_MODEL.get(
+        "needs_review_min_confidence", 0.40
+    )
+
+    _NEEDS_REVIEW_MARGIN = _TRAINED_MODEL.get(
+        "needs_review_margin", 0.15
+    )
+
+else:
+
+    _NEEDS_REVIEW_MIN_CONFIDENCE = 0.40
+    _NEEDS_REVIEW_MARGIN = 0.15
 
 # "Partially AI-Edited" needs a much higher bar than the other three
 # classes before being trusted (see the comment where this is used) —
 # it is the model's documented weakest, most-often-wrong class.
 _PARTIALLY_EDITED_MIN_CONFIDENCE = 0.70
+
+# Cross-check thresholds (see the "Sanity check" comment further
+# down) — ALSO calibrated per-model now, not a fixed 0.35 guess.
+# A fixed 0.35 turned out to flag the majority of genuinely-correct
+# "Manipulated" predictions specifically, because the trained model
+# legitimately catches manipulations using OTHER signals (ELA,
+# regional AI-score variance) that Phase 1's classical
+# manipulationProbability alone misses — requiring them to always
+# agree undermines the whole point of combining multiple signals.
+if _TRAINED_MODEL is not None:
+
+    _MANIPULATED_CROSS_CHECK_THRESHOLD = _TRAINED_MODEL.get(
+        "manipulated_cross_check_threshold", 0.35
+    )
+
+    _AI_GENERATED_CROSS_CHECK_THRESHOLD = _TRAINED_MODEL.get(
+        "ai_generated_cross_check_threshold", 0.35
+    )
+
+else:
+
+    _MANIPULATED_CROSS_CHECK_THRESHOLD = 0.35
+    _AI_GENERATED_CROSS_CHECK_THRESHOLD = 0.35
 
 _RECOMMENDATIONS = {
     "Authentic":
@@ -133,9 +175,12 @@ def _combine_with_trained_model(fusion_analysis, manipulation_analysis):
 
     forensic = fusion_analysis.get("forensicFeatures", {})
 
+    ai_regional_std = float(fusion_analysis.get("ai_regional_std") or 0.0)
+
     feature_vector = [
         _probability_to_log_odds(ai_probability),
         _probability_to_log_odds(manipulation_probability),
+        ai_regional_std,
         *[
             float(forensic.get(name, 0.0))
             for name in _FORENSIC_FEATURE_NAMES
@@ -287,7 +332,7 @@ def _combine_with_trained_model(fusion_analysis, manipulation_analysis):
         # flag — downgrade to Needs Review rather than trust the
         # meta-model's combination blindly.
 
-        if prediction == "Manipulated" and manipulation_probability < 0.35:
+        if prediction == "Manipulated" and manipulation_probability < _MANIPULATED_CROSS_CHECK_THRESHOLD:
 
             prediction = "Needs Review"
 
@@ -302,7 +347,7 @@ def _combine_with_trained_model(fusion_analysis, manipulation_analysis):
 
             recommendation = "Needs Review"
 
-        elif prediction == "AI Generated" and ai_probability < 0.35:
+        elif prediction == "AI Generated" and ai_probability < _AI_GENERATED_CROSS_CHECK_THRESHOLD:
 
             prediction = "Needs Review"
 

@@ -15,7 +15,7 @@ from cv.ela import (
 from cv.forgery import analyze_forgery
 from cv.manipulation import analyze_manipulation
 
-from ai.detector import detect_ai_image, detect_ai_tiled
+from ai.detector import detect_ai_image, detect_ai_tiled, detect_ai_coarse_regions
 
 from services.fusion import predict_fusion
 from services.final_fusion import combine_final_analysis, refine_with_tile_analysis
@@ -110,6 +110,19 @@ async def analyze_image(
         # --------------------------------------------------
 
         ai_detection = detect_ai_image(
+            temp_path
+        )
+
+
+        # --------------------------------------------------
+        # 4b. COARSE REGIONAL CHECK (Phase 4 root-cause fix)
+        # --------------------------------------------------
+        # Cheap (4-region) heterogeneity signal, always computed —
+        # unlike the expensive optional Deep Scan (detect_ai_tiled).
+        # See ai/detector.py's docstring for why this matters for
+        # catching partially AI-edited images.
+
+        coarse_regions = detect_ai_coarse_regions(
             temp_path
         )
 
@@ -217,7 +230,8 @@ async def analyze_image(
             "sharpnessScore": forgery_analysis["sharpnessScore"],
             "blockSharpnessAverage": forgery_analysis["blockSharpnessAverage"],
             "blockSharpnessStd": forgery_analysis["blockSharpnessStd"]
-        }
+        },
+        ai_regional_std=coarse_regions["regionalStd"]
     )
 
 
@@ -249,6 +263,8 @@ async def analyze_image(
         **image_info,
 
         "aiDetection": ai_detection,
+
+        "coarseRegionAnalysis": coarse_regions,
 
         "metadata": metadata,
 

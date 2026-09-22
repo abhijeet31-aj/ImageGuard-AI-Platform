@@ -79,10 +79,18 @@ def probability_to_log_odds(probability):
 def predict_fusion(
     ai_probability,
     forensic_analysis,
+    ai_regional_std=None,
 ):
     """
     Generate the final fusion prediction using
     the fixed production fusion model.
+
+    ai_regional_std (Phase 4) is NOT used by this function's own
+    binary AI-vs-Real model — that model's fixed weights were trained
+    on exactly 11 features (ai_log_odds + 10 forensic) and stay
+    untouched. It is only accepted here so it can be echoed back in
+    the return value, for services/final_fusion.py's separately
+    trained meta-fusion model to consume.
     """
 
     # --------------------------------------------------------
@@ -222,4 +230,6 @@ def predict_fusion(
         # 0.0 for every live prediction, corrupting the feature vector
         # fed to the trained model (this was a real, severe bug).
         "forensicFeatures": forensic_analysis,
+
+        "ai_regional_std": ai_regional_std,
     }
