@@ -132,6 +132,19 @@ FEATURE_COLUMNS = [
     *FORENSIC_FEATURES,
 ]
 
+# NOTE: metadataIntegrityScore is still extracted and stored in the
+# CSV (see CSV_COLUMNS below) but deliberately excluded from
+# FEATURE_COLUMNS — direct analysis of the real extracted dataset
+# showed it is essentially CONSTANT (99.7% of images score exactly
+# 60/100) because academic/benchmark datasets (RAISE, IMD2020,
+# CocoGlide/AutoSplice) have their EXIF stripped during curation. A
+# feature with almost no variance in training data cannot be learned
+# from, and near-zero-variance features actively risk amplifying rare
+# outlier values into large, misleading z-scores after standardization.
+# It may still be useful directly on live uploads (which retain real
+# phone/camera EXIF) — but this trained model currently cannot make
+# use of it, since it never saw meaningful variation during training.
+
 CSV_COLUMNS = [
     "filename",
     "class_label",
@@ -139,6 +152,7 @@ CSV_COLUMNS = [
     "ai_probability",
     "manipulationProbability",
     "aiRegionalStd",
+    "metadataIntegrityScore",
     *FORENSIC_FEATURES,
 ]
 

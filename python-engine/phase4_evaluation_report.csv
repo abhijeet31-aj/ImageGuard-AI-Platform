@@ -1,17 +1,17 @@
 class,support,precision,recall,f1
-Authentic,225,0.7057,0.8844,0.785
-AI Generated,225,0.9865,0.9733,0.9799
-Manipulated,225,0.8705,0.7467,0.8038
-Partially AI-Edited,225,0.7635,0.6889,0.7243
+Authentic,225,0.6868,0.8578,0.7628
+AI Generated,225,0.9864,0.9689,0.9776
+Manipulated,225,0.8238,0.7067,0.7608
+Partially AI-Edited,225,0.7561,0.6889,0.7209
 
-overall_accuracy,0.8233
-macro_precision,0.8316
-macro_recall,0.8233
-macro_f1,0.8232
+overall_accuracy,0.8056
+macro_precision,0.8133
+macro_recall,0.8056
+macro_f1,0.8055
 
 "confusion_matrix (rows=true, cols=predicted)"
 ,Authentic,AI Generated,Manipulated,Partially AI-Edited
-Authentic,199,0,6,20
-AI Generated,1,219,1,4
-Manipulated,32,1,168,24
-Partially AI-Edited,50,2,18,155
+Authentic,193,0,13,19
+AI Generated,1,218,2,4
+Manipulated,39,0,159,27
+Partially AI-Edited,48,3,19,155

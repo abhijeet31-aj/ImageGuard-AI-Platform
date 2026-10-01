@@ -95,6 +95,26 @@ else:
     _NEEDS_REVIEW_MIN_CONFIDENCE = 0.40
     _NEEDS_REVIEW_MARGIN = 0.15
 
+# Second, stricter tier: below THIS, it's a hard "Needs Review" no
+# matter what. Between this and _NEEDS_REVIEW_MIN_CONFIDENCE/_MARGIN,
+# the prediction is still shown, just flagged reliability="Medium"
+# instead of being swallowed into "Needs Review" — see
+# _apply_reliability_tier() below for why this distinction matters.
+if _TRAINED_MODEL is not None:
+
+    _SEVERE_MIN_CONFIDENCE = _TRAINED_MODEL.get(
+        "severe_min_confidence", 0.25
+    )
+
+    _SEVERE_MARGIN = _TRAINED_MODEL.get(
+        "severe_margin", 0.05
+    )
+
+else:
+
+    _SEVERE_MIN_CONFIDENCE = 0.25
+    _SEVERE_MARGIN = 0.05
+
 # "Partially AI-Edited" needs a much higher bar than the other three
 # classes before being trusted (see the comment where this is used) —
 # it is the model's documented weakest, most-often-wrong class.
@@ -221,29 +241,44 @@ def _combine_with_trained_model(fusion_analysis, manipulation_analysis):
     # — so its classification shouldn't be trusted, whatever it says.
 
     ood_threshold = _TRAINED_MODEL.get("ood_threshold")
+    ood_severe_threshold = _TRAINED_MODEL.get("ood_severe_threshold")
+
+    is_mild_ood = False
 
     if ood_threshold is not None:
 
         ood_score = float(np.sqrt(np.mean(normalized ** 2)))
 
-        if ood_score > ood_threshold:
+        severe_cutoff = ood_severe_threshold if ood_severe_threshold is not None else ood_threshold
+
+        if ood_score > severe_cutoff:
 
             return {
                 "prediction": "Needs Review",
                 "confidence": 0.0,
+                "reliability": None,
                 "aiLikelihood": round(ai_probability, 4),
                 "manipulationLikelihood": round(manipulation_probability, 4),
                 "evidence": [
                     f"This image's overall forensic profile is unusually "
                     f"different from the training data (distance score "
                     f"{ood_score:.2f} vs. normal range up to "
-                    f"{ood_threshold:.2f}) — the trained model's "
+                    f"{severe_cutoff:.2f}) — the trained model's "
                     f"classification is not reliable enough to trust "
                     f"here, regardless of what it predicted."
                 ],
                 "recommendation": "Needs Review",
                 "modelType": "trained",
             }
+
+        # Mild OOD (past the softer threshold but not the severe one):
+        # still classify normally, but never call it fully reliable —
+        # on real data, a hard cutoff here mostly rejected small
+        # (128-256px) AI-Generated images that the model actually
+        # classified correctly; downgrading reliability instead of
+        # refusing to answer keeps that information instead of
+        # discarding it.
+        is_mild_ood = ood_score > ood_threshold
 
     logits = normalized @ weights + bias
 
@@ -256,6 +291,7 @@ def _combine_with_trained_model(fusion_analysis, manipulation_analysis):
 
     top_class, top_probability = ranked[0]
     second_class, second_probability = ranked[1]
+    margin = top_probability - second_probability
 
     evidence = [
         f"Trained meta-fusion model: {top_class} "
@@ -263,27 +299,61 @@ def _combine_with_trained_model(fusion_analysis, manipulation_analysis):
         f"({second_probability * 100:.1f}%)."
     ]
 
+    # --------------------------------------------------------
+    # 3-tier reliability instead of a single binary cutoff
+    # --------------------------------------------------------
+    # A single confident/Needs-Review split forces every moderately
+    # uncertain prediction (which is often still correct) into
+    # "Needs Review", throwing away information the person could
+    # still act on. Instead:
+    #   - below the SEVERE threshold  -> hard "Needs Review"
+    #   - below the MEDIUM threshold (but not severe) -> show the
+    #     predicted class with reliability="Medium"
+    #   - otherwise -> predicted class with reliability="High"
+    # Both tiers are calibrated per-model from validation data (see
+    # train_final_model.py), not guessed.
+
+    is_severe = (
+        top_probability < _SEVERE_MIN_CONFIDENCE
+        or margin < _SEVERE_MARGIN
+    )
+
+    is_medium = (
+        not is_severe
+        and (
+            top_probability < _NEEDS_REVIEW_MIN_CONFIDENCE
+            or margin < _NEEDS_REVIEW_MARGIN
+            or is_mild_ood
+        )
+    )
+
     # "Partially AI-Edited" is the documented weakest class (see
     # phase4_evaluation_report.csv — lowest F1, and the confusion
     # matrix shows it is the class most often wrongly predicted for
     # genuinely Authentic images that simply have mild, non-zero
     # readings on both underlying detectors). So it gets a stricter
-    # confidence bar than the other three classes before being
-    # trusted outright.
-    partially_edited_unreliable = (
-        top_class == "Partially AI-Edited"
-        and top_probability < _PARTIALLY_EDITED_MIN_CONFIDENCE
-    )
+    # bar than the other three classes: a clearly-low score is
+    # treated as severe, a borderline score as medium-reliability
+    # rather than trusted outright.
+    if top_class == "Partially AI-Edited" and not is_severe:
 
-    if (
-        top_probability < _NEEDS_REVIEW_MIN_CONFIDENCE
-        or (top_probability - second_probability) < _NEEDS_REVIEW_MARGIN
-        or partially_edited_unreliable
-    ):
+        partially_edited_severe = top_probability < (_PARTIALLY_EDITED_MIN_CONFIDENCE - 0.15)
+
+        partially_edited_medium = top_probability < _PARTIALLY_EDITED_MIN_CONFIDENCE
+
+        if partially_edited_severe:
+            is_severe = True
+
+        elif partially_edited_medium:
+            is_medium = True
+
+    if is_severe:
 
         prediction = "Needs Review"
 
         confidence = top_probability
+
+        reliability = None
 
         evidence.append(
             "The trained model's top prediction was not confident "
@@ -298,10 +368,27 @@ def _combine_with_trained_model(fusion_analysis, manipulation_analysis):
 
         confidence = top_probability
 
+        reliability = "Medium" if is_medium else "High"
+
         recommendation = _RECOMMENDATIONS.get(
             prediction,
             "Needs Review"
         )
+
+        if is_medium:
+
+            evidence.append(
+                "Confidence was moderate rather than high — treat this "
+                "result as likely but not certain."
+            )
+
+            if is_mild_ood:
+
+                evidence.append(
+                    "This image's forensic profile is somewhat unusual "
+                    "compared to the training data, which also reduces "
+                    "reliability here."
+                )
 
         if prediction == "Partially AI-Edited":
 
@@ -336,6 +423,8 @@ def _combine_with_trained_model(fusion_analysis, manipulation_analysis):
 
             prediction = "Needs Review"
 
+            reliability = None
+
             evidence.append(
                 f"Conflict: the trained model classified this as "
                 f"Manipulated, but the underlying manipulation "
@@ -351,6 +440,8 @@ def _combine_with_trained_model(fusion_analysis, manipulation_analysis):
 
             prediction = "Needs Review"
 
+            reliability = None
+
             evidence.append(
                 f"Conflict: the trained model classified this as AI "
                 f"Generated, but the underlying AI-detection model "
@@ -364,6 +455,7 @@ def _combine_with_trained_model(fusion_analysis, manipulation_analysis):
     return {
         "prediction": prediction,
         "confidence": round(float(confidence), 4),
+        "reliability": reliability,
         "aiLikelihood": round(ai_probability, 4),
         "manipulationLikelihood": round(manipulation_probability, 4),
         "evidence": evidence,
@@ -472,6 +564,7 @@ def _combine_rule_based(fusion_analysis, manipulation_analysis):
     return {
         "prediction": prediction,
         "confidence": confidence,
+        "reliability": None if prediction == "Needs Review" else "High",
         "aiLikelihood": round(ai_probability, 4),
         "manipulationLikelihood": round(manipulation_probability, 4),
         "evidence": evidence,

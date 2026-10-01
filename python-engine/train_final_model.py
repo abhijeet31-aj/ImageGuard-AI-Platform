@@ -332,17 +332,37 @@ def main():
 
     val_correct_mask = (val_preds == y_val)
 
-    CONFIDENCE_PERCENTILE = 10
-    MARGIN_PERCENTILE = 10
+    # Two tiers instead of one binary cutoff — a single hard
+    # confident/Needs-Review split forces every moderately-uncertain
+    # (but often still correct) prediction into "Needs Review",
+    # which is honest but throws away useful information the person
+    # could still act on. Instead:
+    #   - below the SEVERE percentile  -> "Needs Review" (hard)
+    #   - below the MEDIUM percentile (but not severe) -> show the
+    #     predicted class with reliability="Medium"
+    #   - otherwise -> predicted class with reliability="High"
+    MEDIUM_CONFIDENCE_PERCENTILE = 10
+    MEDIUM_MARGIN_PERCENTILE = 10
+
+    SEVERE_CONFIDENCE_PERCENTILE = 2
+    SEVERE_MARGIN_PERCENTILE = 2
 
     if val_correct_mask.sum() >= 10:
 
         needs_review_min_confidence = float(
-            np.percentile(val_top1_probability[val_correct_mask], CONFIDENCE_PERCENTILE)
+            np.percentile(val_top1_probability[val_correct_mask], MEDIUM_CONFIDENCE_PERCENTILE)
         )
 
         needs_review_margin = float(
-            np.percentile(val_margin[val_correct_mask], MARGIN_PERCENTILE)
+            np.percentile(val_margin[val_correct_mask], MEDIUM_MARGIN_PERCENTILE)
+        )
+
+        severe_min_confidence = float(
+            np.percentile(val_top1_probability[val_correct_mask], SEVERE_CONFIDENCE_PERCENTILE)
+        )
+
+        severe_margin = float(
+            np.percentile(val_margin[val_correct_mask], SEVERE_MARGIN_PERCENTILE)
         )
 
     else:
@@ -352,26 +372,39 @@ def main():
         # a meaningless percentile from a handful of points.
         needs_review_min_confidence = 0.40
         needs_review_margin = 0.15
+        severe_min_confidence = 0.25
+        severe_margin = 0.05
 
         print(
             "\nWARNING: too few correct validation predictions to "
             "calibrate Needs-Review thresholds — using fallback "
-            "defaults (0.40 / 0.15)."
+            "defaults."
         )
 
-    would_be_flagged = (
-        (val_top1_probability < needs_review_min_confidence)
-        | (val_margin < needs_review_margin)
+    would_be_needs_review = (
+        (val_top1_probability < severe_min_confidence)
+        | (val_margin < severe_margin)
     )
 
-    print(f"\nNeeds-Review thresholds (calibrated from validation data):")
-    print(f"  Min confidence : {needs_review_min_confidence:.3f} "
-          f"(was a fixed 0.40 guess before)")
-    print(f"  Min margin     : {needs_review_margin:.3f} "
-          f"(was a fixed 0.15 guess before)")
-    print(f"  -> would flag {would_be_flagged.sum()}/{len(val_preds)} "
-          f"({would_be_flagged.mean():.1%}) of validation predictions "
-          f"as Needs Review")
+    would_be_medium = (
+        ~would_be_needs_review
+        & (
+            (val_top1_probability < needs_review_min_confidence)
+            | (val_margin < needs_review_margin)
+        )
+    )
+
+    print(f"\nReliability thresholds (calibrated from validation data):")
+    print(f"  Severe (-> Needs Review)  : confidence < {severe_min_confidence:.3f} "
+          f"or margin < {severe_margin:.3f}")
+    print(f"  Medium (-> shown, flagged): confidence < {needs_review_min_confidence:.3f} "
+          f"or margin < {needs_review_margin:.3f}")
+    print(f"  -> {would_be_needs_review.sum()}/{len(val_preds)} "
+          f"({would_be_needs_review.mean():.1%}) would be Needs Review")
+    print(f"  -> {would_be_medium.sum()}/{len(val_preds)} "
+          f"({would_be_medium.mean():.1%}) would be shown with Medium reliability")
+    print(f"  -> {len(val_preds) - would_be_needs_review.sum() - would_be_medium.sum()}/{len(val_preds)} "
+          f"would be shown with High reliability")
 
     # --------------------------------------------------------
     # Cross-check thresholds — ALSO calibrated, not a fixed 0.35
@@ -449,8 +482,20 @@ def main():
 
     ood_threshold = float(np.percentile(val_ood_scores, 97.5))
 
+    # Two-level OOD: the 97.5th percentile is the MILD boundary (image
+    # looks unusual -> still answer, but downgrade reliability), the
+    # 99.5th percentile is the SEVERE boundary (image looks like
+    # nothing seen in training -> hard "Needs Review"). On the real
+    # dataset the hard 97.5th-percentile gate mostly rejected
+    # correctly-classified AI-Generated images (small 128-256px images
+    # whose forensic feature scale simply differs) — flagged images
+    # were MORE accurate than average, the opposite of what a
+    # rejection gate should do.
+    ood_severe_threshold = float(np.percentile(val_ood_scores, 99.5))
+
     print(f"\nOut-of-distribution threshold (97.5th percentile of "
           f"validation RMS z-scores): {ood_threshold:.3f}")
+    print(f"Severe OOD threshold (99.5th percentile): {ood_severe_threshold:.3f}")
     print(
         "Live images whose overall feature profile is farther from "
         "the training distribution than this will be reported as "
@@ -483,9 +528,13 @@ def main():
         "bias": bias.tolist(),
 
         "ood_threshold": ood_threshold,
+        "ood_severe_threshold": ood_severe_threshold,
 
         "needs_review_min_confidence": needs_review_min_confidence,
         "needs_review_margin": needs_review_margin,
+
+        "severe_min_confidence": severe_min_confidence,
+        "severe_margin": severe_margin,
 
         "manipulated_cross_check_threshold": manipulated_cross_check_threshold,
         "ai_generated_cross_check_threshold": ai_generated_cross_check_threshold,

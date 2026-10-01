@@ -332,7 +332,13 @@ def detect_ai_coarse_regions(image_path, grid=3):
 
             scores.append(_score_pil_image(crop))
 
-    regional_std = float(np.std(scores)) if scores else 0.0
+    # max-minus-median instead of plain std: empirically ~3x more
+    # sensitive to a SINGLE anomalous region among otherwise-uniform
+    # ones (exactly the localized-edit case this exists to catch),
+    # since std gets diluted by all the uniform regions dominating
+    # the spread calculation, while this metric asks the more direct
+    # question "how far does the most different region stand out?"
+    regional_std = float(np.max(scores) - np.median(scores)) if scores else 0.0
 
     return {
         "regionCount": len(scores),

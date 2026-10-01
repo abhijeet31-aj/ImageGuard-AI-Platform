@@ -84,6 +84,13 @@ function Result({ analysis, imagePreview, onBack, onAnalyzeAgain }) {
         1
     );
 
+    // "High" / "Medium" / null (null for Needs Review, and for older
+    // records saved before this field existed). A Medium-reliability
+    // result is still shown as its predicted class — just visibly
+    // flagged as less certain — instead of being swallowed into a
+    // generic "Needs Review" the way it used to be.
+    const reliability = finalAnalysis.reliability || null;
+
     const VERDICT_STYLES = {
         "Authentic": { tone: "ig-authentic", badge: "AUTHENTIC", text: "This image appears likely authentic" },
         "AI Generated": { tone: "ig-ai-warning", badge: "AI GENERATED", text: "This image contains likely AI-generated content" },
@@ -92,9 +99,18 @@ function Result({ analysis, imagePreview, onBack, onAnalyzeAgain }) {
         "Needs Review": { tone: "ig-needs-review", badge: "NEEDS REVIEW", text: "Signals were inconclusive for this image" },
     };
 
-    const verdictStyle =
+    let verdictStyle =
         VERDICT_STYLES[classification] ||
         { tone: "ig-needs-review", badge: "NEEDS REVIEW", text: "Signals were inconclusive for this image" };
+
+    if (reliability === "Medium" && classification !== "Needs Review") {
+
+        verdictStyle = {
+            ...verdictStyle,
+            tone: "ig-needs-review",
+            badge: `${verdictStyle.badge} · MEDIUM CONFIDENCE`,
+        };
+    }
 
     const recommendation =
         report.recommendation ||
@@ -182,6 +198,15 @@ function Result({ analysis, imagePreview, onBack, onAnalyzeAgain }) {
                                 <span>Classification</span>
                                 <strong>{classification}</strong>
                             </div>
+
+                            {reliability && (
+                                <div className="ig-detail-row">
+                                    <span>Reliability</span>
+                                    <strong className={reliability === "Medium" ? "ig-reliability-medium" : ""}>
+                                        {reliability}
+                                    </strong>
+                                </div>
+                            )}
 
                             <div className="ig-detail-row ig-recommendation">
                                 <span>Recommendation</span>

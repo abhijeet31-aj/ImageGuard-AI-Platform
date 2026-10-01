@@ -105,6 +105,15 @@ export const calculateTrustScore = ({
     if (finalAnalysis?.prediction === "Needs Review") {
 
         trustScore = clamp(trustScore, 40, 65);
+
+    } else if (finalAnalysis?.reliability === "Medium") {
+
+        // A predicted class shown with Medium reliability is still a
+        // real answer (not "Needs Review") — just a less certain one.
+        // Nudge the score down slightly rather than fully capping it,
+        // so trustScore stays informative without overstating
+        // certainty either way.
+        trustScore = clamp(trustScore - 10, 0, 80);
     }
 
 

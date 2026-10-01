@@ -104,6 +104,13 @@ def main():
     correct_among_confident = 0
     confident_count = 0
 
+    # Per-tier tracking — validates that the reliability tiers are
+    # actually meaningful: High-reliability predictions should be
+    # noticeably MORE accurate than Medium-reliability ones. If they
+    # aren't, the tier boundary isn't separating anything useful.
+    tier_counts = {"High": 0, "Medium": 0}
+    tier_correct = {"High": 0, "Medium": 0}
+
     reason_counts = {}
 
     reason_by_true_class = {}
@@ -133,18 +140,40 @@ def main():
 
             confident_count += 1
 
-            if result["prediction"] == true_class:
+            is_correct = result["prediction"] == true_class
+
+            if is_correct:
                 correct_among_confident += 1
+
+            tier = result.get("reliability") or "High"
+
+            if tier in tier_counts:
+                tier_counts[tier] += 1
+                if is_correct:
+                    tier_correct[tier] += 1
 
     print(f"Needs Review triggered: {needs_review_count} / {total} "
           f"({needs_review_count / total:.1%})")
 
-    print(f"Confident predictions:  {confident_count} / {total} "
+    print(f"Answered (High + Medium reliability): {confident_count} / {total} "
           f"({confident_count / total:.1%})")
 
     if confident_count > 0:
-        print(f"Accuracy on confident predictions: "
+        print(f"Accuracy on all answered predictions: "
               f"{correct_among_confident / confident_count:.2%}")
+
+    print("\nReliability tier breakdown (should show High > Medium in accuracy):")
+
+    for tier in ["High", "Medium"]:
+
+        count = tier_counts[tier]
+
+        if count > 0:
+            tier_accuracy = tier_correct[tier] / count
+            print(f"  {tier:<8s} {count:>4d} images ({count / total:.1%} of all)  "
+                  f"accuracy: {tier_accuracy:.2%}")
+        else:
+            print(f"  {tier:<8s} {count:>4d} images")
 
     print("\nWhy Needs Review triggered (by safety layer):")
 

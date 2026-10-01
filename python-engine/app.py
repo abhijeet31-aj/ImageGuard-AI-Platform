@@ -231,7 +231,8 @@ async def analyze_image(
             "blockSharpnessAverage": forgery_analysis["blockSharpnessAverage"],
             "blockSharpnessStd": forgery_analysis["blockSharpnessStd"]
         },
-        ai_regional_std=coarse_regions["regionalStd"]
+        ai_regional_std=coarse_regions["regionalStd"],
+        metadata_integrity_score=metadata_analysis["integrityScore"]
     )
 
 

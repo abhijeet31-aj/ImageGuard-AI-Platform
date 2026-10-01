@@ -80,6 +80,7 @@ def predict_fusion(
     ai_probability,
     forensic_analysis,
     ai_regional_std=None,
+    metadata_integrity_score=None,
 ):
     """
     Generate the final fusion prediction using
@@ -232,4 +233,6 @@ def predict_fusion(
         "forensicFeatures": forensic_analysis,
 
         "ai_regional_std": ai_regional_std,
+
+        "metadata_integrity_score": metadata_integrity_score,
     }

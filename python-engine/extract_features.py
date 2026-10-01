@@ -31,6 +31,7 @@ import traceback
 from pathlib import Path
 
 from cv.image_reader import read_image
+from cv.metadata import extract_metadata, analyze_metadata
 from cv.ela import generate_difference_image, calculate_ela_metrics
 from cv.forgery import analyze_forgery
 from cv.manipulation import analyze_manipulation
@@ -117,6 +118,9 @@ def process_image(image_path, class_label):
         difference_image
     )
 
+    metadata = extract_metadata(image_bytes)
+    metadata_analysis = analyze_metadata(metadata)
+
     row = {
         "filename": str(image_path.relative_to(DATASET_DIR)),
         "class_label": class_label,
@@ -124,6 +128,7 @@ def process_image(image_path, class_label):
         "ai_probability": ai_detection["ai_probability"],
         "manipulationProbability": manipulation_analysis["manipulationProbability"],
         "aiRegionalStd": coarse_regions["regionalStd"],
+        "metadataIntegrityScore": metadata_analysis["integrityScore"],
         "meanDifference": ela_metrics["meanDifference"],
         "maxDifference": ela_metrics["maxDifference"],
         "standardDeviation": ela_metrics["standardDeviation"],

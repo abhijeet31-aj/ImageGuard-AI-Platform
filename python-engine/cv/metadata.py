@@ -61,21 +61,36 @@ def analyze_metadata(metadata):
     """
     Analyze extracted metadata and generate
     integrity score and findings.
+
+    IMPORTANT: this must stay fair to images that were never going to
+    have traditional camera EXIF in the first place — webcam
+    captures, screen recordings/screenshots, and many messaging-app
+    photos never carry cameraMake/cameraModel/dateTaken, even when
+    completely genuine. The old scoring gave heavy bonuses for having
+    those fields and effectively penalized their absence by omission
+    (base 50 + no bonuses landed in "High risk" territory, identical
+    to a genuinely suspicious stripped-metadata image) — a false
+    alarm on an entire category of legitimate photos.
+
+    The real, meaningful signal here is EXPLICIT evidence of editing
+    software — that's a strong, specific finding regardless of
+    capture source. Missing camera fields alone is now treated as
+    inconclusive (stays near the neutral midpoint), not suspicious.
     """
 
-    score = 50
+    score = 60  # neutral: "can't confirm camera origin" is normal, not suspicious on its own
     findings = []
 
     if metadata["cameraMake"]:
-        score += 20
+        score += 15
         findings.append("Camera manufacturer information available.")
 
     if metadata["cameraModel"]:
-        score += 20
+        score += 15
         findings.append("Camera model information available.")
 
     if metadata["dateTaken"]:
-        score += 15
+        score += 10
         findings.append("Capture date available.")
 
     if metadata["gpsAvailable"]:
@@ -99,14 +114,14 @@ def analyze_metadata(metadata):
         findings.append(f"Software detected: {software}")
 
         if any(app.lower() in software.lower() for app in editing_software):
-            score -= 25
+            score -= 30
             findings.append("Editing software detected.")
 
     score = max(0, min(score, 100))
 
-    if score >= 80:
+    if score >= 75:
         risk = "Low"
-    elif score >= 60:
+    elif score >= 45:
         risk = "Medium"
     else:
         risk = "High"
