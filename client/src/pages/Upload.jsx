@@ -13,8 +13,10 @@ function Upload({ onBack, onUploadComplete }) {
 
         if (!selectedFile) return;
 
-        if (!selectedFile.type.startsWith("image/")) {
-            setMessage("Please select a valid image file.");
+        const allowedTypes = ["image/jpeg", "image/png"];
+
+        if (!allowedTypes.includes(selectedFile.type)) {
+            setMessage("Please select a JPG, JPEG, or PNG image.");
             return;
         }
 
@@ -111,14 +113,14 @@ function Upload({ onBack, onUploadComplete }) {
                             <div className="upload-placeholder">
                                 <div className="upload-icon">↥</div>
                                 <strong>Choose an image</strong>
-                                <span>JPG, JPEG, PNG, or WEBP supported</span>
+                                <span>JPG, JPEG or PNG supported</span>
                             </div>
                         )}
 
                         <input
                             id="image-upload"
                             type="file"
-                            accept="image/*"
+                            accept=".jpg,.jpeg,.png,image/jpeg,image/png"
                             onChange={handleFileChange}
                             hidden
                         />

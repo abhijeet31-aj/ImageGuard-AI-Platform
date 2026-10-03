@@ -77,25 +77,38 @@
     overflow: hidden;
     border: 1px solid #dce8df;
     border-radius: 18px;
-    background: white;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
 .history-image {
-    height: 200px;
+    width: 100%;
+    height: 300px;
+    flex-shrink: 0;
     display: grid;
     place-items: center;
+    overflow: hidden;
     color: #72857a;
     background: #eef6f1;
+    position: relative;
 }
 
 .history-image img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
+
 .history-card-content {
-    padding: 20px;
+    position: relative;
+    z-index: 2;
+    padding: 10px;
+    background: #ffffff;
+    flex: 1;
 }
 
 .history-date {

@@ -33,6 +33,13 @@ python-engine/datasets/
 python-engine/Note/
 
 # ==========================
+# Accidental backup files (e.g. "(old)filename.csv")
+# ==========================
+*(old)*
+*(old2)*
+*.bak
+
+# ==========================
 # IDE
 # ==========================
 .vscode/

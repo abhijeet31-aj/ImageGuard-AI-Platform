@@ -52,7 +52,7 @@
 .upload-content {
     width: min(100% - 44px, 700px);
     margin: 0 auto;
-    padding: clamp(35px, 9vw, 45px) 0;
+    padding: 125px 0 60px;
 }
 
 .upload-eyebrow {
