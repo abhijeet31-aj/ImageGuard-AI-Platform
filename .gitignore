@@ -31,6 +31,7 @@ python-engine/external-test/
 python-engine/new-test/
 python-engine/datasets/
 python-engine/Note/
+python-engine/services/final_fusion_bac.py
 
 # ==========================
 # Accidental backup files (e.g. "(old)filename.csv")
