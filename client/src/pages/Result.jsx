@@ -58,7 +58,7 @@ function getVerdict(classification) {
                 badge: "AUTHENTIC",
                 title: "This image is likely authentic",
                 description:
-                    "ImageGuard found no strong signs of AI-generated content or significant digital manipulation.",
+                    "ImageGuard did not find evidence of AI generation or digital editing. This is not proof of authenticity: no detector can fully confirm that an image is genuine.",
             };
 
         case "AI Generated":
@@ -99,26 +99,27 @@ function getVerdict(classification) {
     }
 }
 
-function getRecommendation(classification, backendRecommendation) {
-    if (backendRecommendation) {
-        return backendRecommendation;
-    }
+function getRecommendation(classification, confidence) {
+    const hedge =
+        confidence !== null && confidence < 60
+            ? " Confidence is moderate, so treat this as likely rather than certain."
+            : "";
 
     switch (classification) {
         case "Authentic":
-            return "No significant signs of AI generation or digital manipulation were detected. The image can be considered likely authentic.";
+            return "No evidence of AI generation or digital editing was found. This is not proof of authenticity, so verify the source for important uses." + hedge;
 
         case "AI Generated":
-            return "This image shows strong signs of AI-generated content. Verify the original source before using or sharing it.";
+            return "This image shows strong signs of being AI-generated. Verify the original source before using or sharing it." + hedge;
 
         case "Manipulated":
-            return "This image may have been digitally altered. Verify the original image or source before relying on it.";
+            return "This image may have been digitally edited. Verify the original image or source before relying on it." + hedge;
 
         case "Partially AI-Edited":
-            return "Some parts of this image may have been modified using AI. Review the original source before using it as evidence.";
+            return "Some parts of this image may have been modified using AI. Review the original source before using it as evidence." + hedge;
 
         default:
-            return "The available signals are inconclusive. Consider verifying the image through its original source or additional evidence.";
+            return "There is not enough evidence for a reliable conclusion. Verify the image through its original source or additional evidence.";
     }
 }
 
@@ -149,7 +150,7 @@ function getAIContent(aiLikelihood) {
     return {
         value: "Low",
         description:
-            "Only limited signals associated with AI-generated content were detected.",
+            "The AI-generation detector found only limited signals of a fully AI-generated image. It cannot see local edits.",
     };
 }
 
@@ -178,9 +179,9 @@ function getManipulationContent(manipulationLikelihood) {
     }
 
     return {
-        value: "Not detected",
+        value: "No strong signal",
         description:
-            "No strong manipulation signals were detected.",
+            "The classic-edit detector found no strong signal. It can miss clean edits and AI-based edits.",
     };
 }
 
@@ -258,6 +259,12 @@ function Result({
     /*
      * TRUST SCORE
      */
+    // "Needs Review" means the evidence is inconclusive: do not show the
+    // probability of the class that was downgraded as if it were a
+    // confidence in the verdict.
+    const isNeedsReview = classification === "Needs Review";
+    const shownConfidence = isNeedsReview ? null : confidence;
+
     const trustScore = toPercent(
         report.trustScore ??
         analysis?.trustScore,
@@ -275,7 +282,7 @@ function Result({
      * Recommendation from backend is preferred.
      * Otherwise frontend fallback is used.
      */
-    const recommendation = getRecommendation(classification);
+    const recommendation = getRecommendation(classification, shownConfidence);
 
     /*
      * DEEP SCAN
@@ -397,9 +404,9 @@ function Result({
                             <div className="ig-percentage">
 
                                 <strong>
-                                    {confidence === null
+                                    {shownConfidence === null
                                         ? "—"
-                                        : `${confidence}%`}
+                                        : `${shownConfidence}%`}
                                 </strong>
 
                                 <small>
@@ -417,7 +424,7 @@ function Result({
                             <div className="ig-detail-row">
 
                                 <span>
-                                    AI Likelihood
+                                    AI-generation detector (ViT)
                                 </span>
 
                                 <strong>
@@ -436,7 +443,9 @@ function Result({
                                 </span>
 
                                 <strong>
-                                    {confidence === null
+                                    {isNeedsReview
+                                        ? "Not enough evidence"
+                                        : confidence === null
                                         ? "Not available"
                                         : `${confidence}% (${confidenceLevel(
                                             confidence
@@ -503,13 +512,20 @@ function Result({
                                 {verdict.description}
                             </p>
 
+                            <p className="ig-detector-note">
+                                The two cards below show individual
+                                detector signals. The verdict above
+                                combines all evidence, so it can differ
+                                from a single detector.
+                            </p>
+
                             <div className="ig-simple-indicators">
 
                                 {/* AI CONTENT */}
                                 <div className="ig-simple-card">
 
                                     <span>
-                                        AI Content
+                                        AI-generation detector
                                     </span>
 
                                     <strong>
@@ -526,7 +542,7 @@ function Result({
                                 <div className="ig-simple-card">
 
                                     <span>
-                                        Image Manipulation
+                                        Classic-edit detector
                                     </span>
 
                                     <strong>

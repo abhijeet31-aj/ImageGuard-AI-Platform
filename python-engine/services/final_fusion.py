@@ -461,6 +461,13 @@ def _combine_with_trained_model(fusion_analysis, manipulation_analysis):
         "evidence": evidence,
         "recommendation": recommendation,
         "modelType": "trained",
+        # All four class probabilities of the trained model. Added so the
+        # backend can derive the Trust Score from the SAME result that
+        # produces the verdict (single source of truth).
+        "classProbabilities": {
+            name: round(float(probability), 4)
+            for name, probability in zip(class_names, probabilities.tolist())
+        },
     }
 
 

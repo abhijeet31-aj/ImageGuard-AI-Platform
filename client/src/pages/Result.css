@@ -709,3 +709,10 @@
         text-align: left;
     }
 }
+
+/* Note under "Why this result?" explaining that cards are single detectors */
+.ig-detector-note {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin: 0.5rem 0 0.75rem;
+}
