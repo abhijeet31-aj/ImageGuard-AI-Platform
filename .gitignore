@@ -50,3 +50,7 @@ python-engine/services/final_fusion_bac.py
 # ==========================
 .DS_Store
 Thumbs.db
+python-engine/ela_output.jpg
+python-engine/image_audit.csv
+python-engine/batch_output/
+*.BACKUP.json

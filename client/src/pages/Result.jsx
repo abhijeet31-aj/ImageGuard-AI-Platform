@@ -237,12 +237,15 @@ function Result({
     /*
      * CONFIDENCE
      */
-    const confidence = toPercent(
-        finalAnalysis.confidence ??
-        finalAnalysis.confidenceScore ??
-        fusionAnalysis.confidence,
-        1
-    );
+    // Use ONLY the final model's confidence. Never fall back to another
+    // detector's confidence: that would mix numbers from different models.
+    const rawConfidence =
+        finalAnalysis.confidence ?? finalAnalysis.confidenceScore;
+
+    const confidence =
+        rawConfidence === null || rawConfidence === undefined
+            ? null
+            : toPercent(rawConfidence, 1);
 
     /*
      * MANIPULATION
@@ -263,7 +266,11 @@ function Result({
     // probability of the class that was downgraded as if it were a
     // confidence in the verdict.
     const isNeedsReview = classification === "Needs Review";
-    const shownConfidence = isNeedsReview ? null : confidence;
+    // After a Deep Scan changes the verdict there is no calibrated confidence.
+    const isDeepScanOverride =
+        finalAnalysis.confidenceBasis === "deep_scan_override";
+    const shownConfidence =
+        isNeedsReview || isDeepScanOverride ? null : confidence;
 
     const trustScore = toPercent(
         report.trustScore ??
@@ -445,6 +452,8 @@ function Result({
                                 <strong>
                                     {isNeedsReview
                                         ? "Not enough evidence"
+                                        : isDeepScanOverride
+                                        ? "Deep Scan (region evidence)"
                                         : confidence === null
                                         ? "Not available"
                                         : `${confidence}% (${confidenceLevel(

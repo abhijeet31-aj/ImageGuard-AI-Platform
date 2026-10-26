@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import tempfile
 import json
@@ -22,6 +23,12 @@ from services.final_fusion import combine_final_analysis, refine_with_tile_analy
 
 from utils.csv_logger import save_ela_metrics
 from utils.forgery_csv_logger import save_forgery_metrics
+
+# Per-request debug side effects (writing ela_output.jpg and appending to the
+# training CSV logs). OFF by default: a shared output file races between
+# concurrent users and live uploads should not leak into training CSVs.
+# Set IMAGEGUARD_DEBUG_OUTPUT=1 to turn them back on.
+DEBUG_OUTPUT = os.environ.get("IMAGEGUARD_DEBUG_OUTPUT", "0") == "1"
 
 
 app = FastAPI(
@@ -159,22 +166,21 @@ async def analyze_image(
         difference_image
     )
 
-    ela_preview = create_ela_preview(
-        difference_image
-    )
+    if DEBUG_OUTPUT:
 
-    ela_preview.save(
-        "ela_output.jpg"
-    )
+        create_ela_preview(
+            difference_image
+        ).save(
+            "ela_output.jpg"
+        )
 
-
-    save_ela_metrics(
-        filename=image.filename,
-        category=category,
-        mean_difference=ela_metrics["meanDifference"],
-        max_difference=ela_metrics["maxDifference"],
-        standard_deviation=ela_metrics["standardDeviation"]
-    )
+        save_ela_metrics(
+            filename=image.filename,
+            category=category,
+            mean_difference=ela_metrics["meanDifference"],
+            max_difference=ela_metrics["maxDifference"],
+            standard_deviation=ela_metrics["standardDeviation"]
+        )
 
 
     # --------------------------------------------------
@@ -186,17 +192,19 @@ async def analyze_image(
     )
 
 
-    save_forgery_metrics(
-        filename=image.filename,
-        category=category,
-        edge_density=forgery_analysis["edgeDensity"],
-        noise_mean=forgery_analysis["noiseMean"],
-        noise_std=forgery_analysis["noiseStd"],
-        blur_score=forgery_analysis["blurScore"],
-        sharpness_score=forgery_analysis["sharpnessScore"],
-        block_average=forgery_analysis["blockSharpnessAverage"],
-        block_std=forgery_analysis["blockSharpnessStd"]
-    )
+    if DEBUG_OUTPUT:
+
+        save_forgery_metrics(
+            filename=image.filename,
+            category=category,
+            edge_density=forgery_analysis["edgeDensity"],
+            noise_mean=forgery_analysis["noiseMean"],
+            noise_std=forgery_analysis["noiseStd"],
+            blur_score=forgery_analysis["blurScore"],
+            sharpness_score=forgery_analysis["sharpnessScore"],
+            block_average=forgery_analysis["blockSharpnessAverage"],
+            block_std=forgery_analysis["blockSharpnessStd"]
+        )
 
 
     # --------------------------------------------------

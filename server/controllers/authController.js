@@ -14,6 +14,13 @@ export const registerUser = async (req, res) => {
             });
         }
 
+        if (String(password).length < 6) {
+            return res.status(400).json({
+                success: false,
+                message: "Password must be at least 6 characters",
+            });
+        }
+
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
@@ -67,9 +74,9 @@ export const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(404).json({
+            return res.status(401).json({
                 success: false,
-                message: "User not found",
+                message: "Invalid email or password",
             });
         }
 
@@ -79,7 +86,7 @@ export const loginUser = async (req, res) => {
         if (!isMatch) {
             return res.status(401).json({
                 success: false,
-                message: "Invalid password",
+                message: "Invalid email or password",
             });
         }
 

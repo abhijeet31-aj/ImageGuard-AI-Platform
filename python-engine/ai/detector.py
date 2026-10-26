@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import numpy as np
@@ -7,7 +8,14 @@ from torchvision import transforms
 from transformers import AutoModelForImageClassification
 
 
-MODEL_DIR = Path(r"D:\ImageGuardML\trained_model")
+# Folder containing the trained ViT (Community Forensics) weights.
+# Override with the IMAGEGUARD_MODEL_DIR environment variable on other machines.
+MODEL_DIR = Path(
+    os.environ.get(
+        "IMAGEGUARD_MODEL_DIR",
+        r"D:\ImageGuardML\trained_model"
+    )
+)
 
 THRESHOLD = 0.35
 

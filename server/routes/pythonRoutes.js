@@ -1,5 +1,6 @@
 import express from "express";
 import upload from "../middleware/uploadMiddleware.js";
+import protect from "../middleware/authMiddleware.js";
 import {
     checkPythonEngine,
     sendImageToPython
@@ -28,6 +29,7 @@ router.get("/health", async (req, res) => {
 // Temporary Image Transfer Test
 router.post(
     "/test-upload",
+    protect,
     upload.single("image"),
     async (req, res) => {
 

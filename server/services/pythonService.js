@@ -43,6 +43,7 @@ export const sendImageToPython = async (imagePath, category) => {
 
         {
             headers: formData.getHeaders(),
+            timeout: 120000,
         }
 
     );
@@ -77,6 +78,7 @@ export const sendImageForDeepScan = async (imagePath, finalAnalysis) => {
 
         {
             headers: formData.getHeaders(),
+            timeout: 300000,
         }
 
     );

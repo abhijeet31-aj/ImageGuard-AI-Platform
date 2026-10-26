@@ -12,39 +12,32 @@ const storage = multer.diskStorage({
     },
 });
 
+// Maximum upload size in MB (override with the MAX_UPLOAD_MB env variable).
+const MAX_UPLOAD_MB = Number(process.env.MAX_UPLOAD_MB) || 25;
+
+const allowedExtensions = [
+    ".jpg",
+    ".jpeg",
+    ".png",
+];
+
+const allowedMimeTypes = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "application/octet-stream",
+];
+
 const fileFilter = (req, file, cb) => {
-    console.log("========== UPLOAD DEBUG ==========");
-    console.log("Original name:", file.originalname);
-    console.log("MIME type:", file.mimetype);
-    console.log("Extension:", path.extname(file.originalname));
-    console.log("==================================");
-
-    const allowedExtensions = [
-        ".jpg",
-        ".jpeg",
-        ".png",
-    ];
-
-    const allowedMimeTypes = [
-        "image/jpeg",
-        "image/jpg",
-        "image/png",
-        "application/octet-stream",
-    ];
 
     const extension = path.extname(file.originalname).toLowerCase();
 
     const extensionValid = allowedExtensions.includes(extension);
     const mimeValid = allowedMimeTypes.includes(file.mimetype);
 
-    console.log("Extension valid:", extensionValid);
-    console.log("MIME valid:", mimeValid);
-
     if (extensionValid && mimeValid) {
-        console.log("Final valid: true");
         cb(null, true);
     } else {
-        console.log("Final valid: false");
         cb(new Error("Only JPG, JPEG and PNG images are allowed."));
     }
 };
@@ -52,6 +45,9 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
+    limits: {
+        fileSize: MAX_UPLOAD_MB * 1024 * 1024,
+    },
 });
 
 export default upload;

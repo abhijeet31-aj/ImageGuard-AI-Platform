@@ -131,6 +131,18 @@ export const calculateTrustScore = ({
         }));
     }
 
+    // Verdict/Trust consistency: an "edited / AI" verdict can never come with
+    // a trust score in the Medium or High band, whatever the source numbers
+    // say (for example a Deep Scan override that has no class probabilities).
+    if (
+        ["AI Generated", "Manipulated", "Partially AI-Edited"].includes(
+            finalAnalysis?.prediction
+        )
+    ) {
+        trustScore = Math.min(trustScore, 39);
+    }
+
+
     // --------------------------------------------------
     // RISK LEVEL
     // --------------------------------------------------

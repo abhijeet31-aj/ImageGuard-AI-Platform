@@ -13,7 +13,10 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+// Set CLIENT_ORIGIN (comma separated) to restrict CORS, e.g.
+// CLIENT_ORIGIN=http://localhost:5173. If unset, behaviour is unchanged (open).
+const corsOrigin = process.env.CLIENT_ORIGIN;
+app.use(cors(corsOrigin ? { origin: corsOrigin.split(",") } : undefined));
 app.use(express.json());
 
 app.use("/uploads", express.static("uploads"));
@@ -25,6 +28,30 @@ app.use("/api/python", pythonRoutes);
 
 app.get("/", (req, res) => {
     res.send("ImageGuard API Running...");
+});
+
+// JSON error responses (upload too large / wrong type) instead of an HTML 500.
+app.use((err, req, res, next) => {
+
+    if (!err) {
+        return next();
+    }
+
+    if (err.code === "LIMIT_FILE_SIZE") {
+        return res.status(413).json({
+            success: false,
+            message: "Image is too large.",
+        });
+    }
+
+    const isUploadError =
+        err.name === "MulterError" ||
+        err.message === "Only JPG, JPEG and PNG images are allowed.";
+
+    return res.status(isUploadError ? 400 : 500).json({
+        success: false,
+        message: err.message || "Server Error",
+    });
 });
 
 const PORT = process.env.PORT || 5000;

@@ -646,6 +646,18 @@ def refine_with_tile_analysis(final_analysis, tile_analysis):
 
         refined["recommendation"] = "AI Edited"
 
+        # The whole-image model's confidence, class probabilities and
+        # reliability described the ORIGINAL verdict. They no longer describe
+        # this one, so drop them instead of showing stale numbers (for example
+        # "92.9% confidence" that was really the Authentic probability) next to
+        # the new verdict. Deep Scan gives no calibrated probability.
+        if final_analysis.get("prediction") != "Partially AI-Edited":
+            refined["originalPrediction"] = final_analysis.get("prediction")
+            refined["confidence"] = None
+            refined["confidenceBasis"] = "deep_scan_override"
+            refined["reliability"] = "Medium"
+            refined.pop("classProbabilities", None)
+
     else:
 
         evidence.append(
